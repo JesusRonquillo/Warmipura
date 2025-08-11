@@ -71,14 +71,16 @@ function App() {
 
   return (
     <Router>
-      <div className="App">
+      <div className="App safe-bottom-padding">
         <Navigation items={items} ctaText="CONTÁCTENOS" />
         <Routes>
           <Route
             path="/"
             element={
               <Suspense fallback={<PageLoader isLoading={true}><div /></PageLoader>}>
-                <HeroSection data={heroData} />
+                <div className="pt-6 sm:pt-8">
+                  <HeroSection data={heroData} />
+                </div>
                 <WhatWeDoSection />
                 <TeamSection members={teamMembers} />
                 <InteractiveGuideSection guides={guides} />

@@ -21,8 +21,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ data }) => {
   return (
     <section 
       id="inicio" 
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#FE7F30]"
-      style={{ paddingTop: 'calc(4rem + 2rem)' }}
+      className="relative min-h-[90vh] md:min-h-screen flex items-center justify-center overflow-hidden bg-[#FE7F30]"
+      style={{ paddingTop: 'calc(4rem + 1rem)' }}
     >
       {/* Parallax Background Elements */}
       <div 
@@ -52,7 +52,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ data }) => {
         <div className="absolute top-1/3 left-1/4 w-12 h-12 bg-[#FE7F30]/30 rounded-lg rotate-45 animate-bounce-slow" />
       </div>
 
-      <div className="container mx-auto px-4 z-10 flex flex-col lg:flex-row items-center justify-between gap-8">
+      <div className="container mx-auto px-4 z-10 flex flex-col lg:flex-row items-center justify-between gap-6 md:gap-8">
         {/* Content with Parallax */}
         <div 
           ref={elementRef as React.RefObject<HTMLDivElement>}
@@ -70,7 +70,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ data }) => {
           <p className="text-xl lg:text-2xl font-body mb-8 max-w-2xl mx-auto lg:mx-0 text-ong-base drop-shadow-md">
             {data.subtitle}
           </p>
-          <div className="flex flex-col sm:flex-row justify-center lg:justify-start gap-4">
+          <div className="relative z-30 flex flex-col sm:flex-row justify-center lg:justify-start gap-3 md:gap-4">
             <Button 
               variant="primary" 
               size="lg" 
@@ -93,8 +93,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ data }) => {
         {/* Visual Elements - Personaje Feliz con elementos flotantes */}
         <div 
           className={cn(
-            'flex justify-center lg:justify-end',
-            'flex-1 relative w-full max-w-md lg:max-w-lg h-96 lg:h-[400px] transition-all duration-1000',
+            'hidden md:flex justify-center lg:justify-end',
+            'flex-1 relative w-full max-w-md lg:max-w-lg h-96 lg:h-[400px] transition-all duration-1000 sm:mt-0 z-0 pointer-events-none',
             hasIntersected ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
           )}
           style={{
@@ -125,28 +125,28 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ data }) => {
           {/* Elementos flotantes - Balance perfecto */}
           
           {/* ⚖️ Justicia - Esquina superior derecha */}
-          <div className="absolute -top-6 -right-6 w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white font-bold text-lg animate-bounce-slow shadow-lg hover:scale-110 transition-transform duration-300 border border-white/30">
+          <div className="absolute -top-6 -right-6 w-12 h-12 md:w-16 md:h-16 bg-white/20 backdrop-blur-sm rounded-full items-center justify-center text-white font-bold text-lg animate-bounce-slow shadow-lg hover:scale-110 transition-transform duration-300 border border-white/30">
             
           </div>
 
           {/* 🤝 Comunidad - Esquina inferior izquierda */}
-          <div className="absolute -bottom-6 -left-6 w-14 h-14 bg-digital-primary/30 backdrop-blur-sm rounded-full flex items-center justify-center text-white text-lg animate-pulse-slow shadow-lg hover:scale-110 transition-transform duration-300 border border-digital-primary/40">
+          <div className="absolute -bottom-6 -left-6 w-10 h-10 md:w-14 md:h-14 bg-digital-primary/30 backdrop-blur-sm rounded-full items-center justify-center text-white text-lg animate-pulse-slow shadow-lg hover:scale-110 transition-transform duration-300 border border-digital-primary/40">
             
           </div>
 
           {/* 📚 Educación - Lado derecho */}
-          <div className="absolute top-1/4 -right-4 w-12 h-12 bg-digital-primary/25 backdrop-blur-sm rounded-full flex items-center justify-center text-white text-sm animate-bounce-slow shadow-lg hover:scale-110 transition-transform duration-300 border border-digital-primary/30">
+          <div className="absolute top-1/4 -right-4 w-10 h-10 md:w-12 md:h-12 bg-digital-primary/25 backdrop-blur-sm rounded-full items-center justify-center text-white text-sm animate-bounce-slow shadow-lg hover:scale-110 transition-transform duration-300 border border-digital-primary/30">
           </div>
 
           {/* 💡 Ideas - Lado izquierdo */}
-          <div className="absolute top-1/3 -left-4 w-12 h-12 bg-digital-primary/30 backdrop-blur-sm rounded-full flex items-center justify-center text-white text-sm animate-pulse-slow shadow-lg hover:scale-110 transition-transform duration-300 border border-digital-primary/40">
+          <div className="absolute top-1/3 -left-4 w-10 h-10 md:w-12 md:h-12 bg-digital-primary/30 backdrop-blur-sm rounded-full items-center justify-center text-white text-sm animate-pulse-slow shadow-lg hover:scale-110 transition-transform duration-300 border border-digital-primary/40">
           
           </div>
         </div>
       </div>
 
       {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+      <div className="hidden md:block absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
         <div className="flex flex-col items-center space-y-2">
           <div className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center">
             <div className="w-1 h-3 bg-white/70 rounded-full mt-2 animate-pulse" />

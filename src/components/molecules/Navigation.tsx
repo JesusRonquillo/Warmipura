@@ -298,12 +298,12 @@ export const Navigation: React.FC<NavigationProps> = ({ items, ctaText }) => {
       </nav>
 
       {/* Chatbot Button */}
-      <div className="fixed bottom-6 right-6 z-50">
-        <button onClick={() => setIsChatbotOpen(!isChatbotOpen)} className={cn('w-16 h-16 bg-gradient-to-r from-digital-primary to-digital-primary text-white rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 flex items-center justify-center group border-2 border-white/20', isChatbotOpen ? 'scale-110 rotate-12' : 'hover:scale-110 hover:rotate-6')}>
+      <div className="fixed bottom-20 xs:bottom-6 right-4 md:bottom-6 md:right-6 z-50">
+        <button onClick={() => setIsChatbotOpen(!isChatbotOpen)} className={cn('w-14 h-14 md:w-16 md:h-16 bg-gradient-to-r from-digital-primary to-digital-primary text-white rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 flex items-center justify-center group border-2 border-white/20', isChatbotOpen ? 'scale-110 rotate-12' : 'hover:scale-110 hover:rotate-6')}>
           {isChatbotOpen ? (
-            <AppIcon icon="lucide:x" className="w-7 h-7 transition-all duration-300" />
+            <AppIcon icon="lucide:x" className="w-6 h-6 md:w-7 md:h-7 transition-all duration-300" />
           ) : (
-            <AppIcon icon="lucide:message-circle" className="w-7 h-7 transition-all duration-300 group-hover:rotate-12" />
+            <AppIcon icon="lucide:message-circle" className="w-6 h-6 md:w-7 md:h-7 transition-all duration-300 group-hover:rotate-12" />
           )}
         </button>
       </div>
