@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import { TutorialSyllabus } from '../organisms/TutorialSyllabus';
 import { TutorialTopic } from '../organisms/TutorialTopic';
-import LogotipoPrincipal from '../../assets/icons/Logotipo Principal SVG.svg';
-import { ArrowLeft, Home } from 'lucide-react';
-import { Link } from 'react-router-dom';
 
 type ViewMode = 'syllabus' | 'topic';
 
@@ -17,7 +14,7 @@ export const WarmipuraDigitalPage: React.FC = () => {
       id: 'introduccion',
       title: 'Introducción a SUNARP',
       description: 'Conoce qué es SUNARP y los trámites que puedes realizar',
-      icon: '🏛️',
+      icon: 'lucide:landmark',
       duration: '5:18',
       isCompleted: false,
       isActive: true
@@ -26,7 +23,7 @@ export const WarmipuraDigitalPage: React.FC = () => {
       id: 'compraventa',
       title: 'Qué es una compraventa',
       description: 'Aprende sobre el proceso de compra y venta de inmuebles',
-      icon: '🏠',
+      icon: 'lucide:home',
       duration: '7:25',
       isCompleted: false,
       isActive: false
@@ -35,7 +32,7 @@ export const WarmipuraDigitalPage: React.FC = () => {
       id: 'registro-propiedades',
       title: 'Registro de Propiedades',
       description: 'Cómo registrar y consultar propiedades inmuebles',
-      icon: '📋',
+      icon: 'lucide:clipboard-list',
       duration: '6:42',
       isCompleted: false,
       isActive: false
@@ -44,7 +41,7 @@ export const WarmipuraDigitalPage: React.FC = () => {
       id: 'vehiculos',
       title: 'Trámites Vehiculares',
       description: 'Registro y transferencia de vehículos',
-      icon: '🚗',
+      icon: 'lucide:car',
       duration: '8:15',
       isCompleted: false,
       isActive: false
@@ -53,7 +50,7 @@ export const WarmipuraDigitalPage: React.FC = () => {
       id: 'empresas',
       title: 'Registro de Empresas',
       description: 'Crear y registrar personas jurídicas',
-      icon: '🏢',
+      icon: 'lucide:building-2',
       duration: '9:30',
       isCompleted: false,
       isActive: false
@@ -62,7 +59,7 @@ export const WarmipuraDigitalPage: React.FC = () => {
       id: 'asociaciones',
       title: 'Asociaciones y ONGs',
       description: 'Constituir organizaciones sin fines de lucro',
-      icon: '🤝',
+      icon: 'lucide:handshake',
       duration: '7:50',
       isCompleted: false,
       isActive: false
@@ -71,7 +68,7 @@ export const WarmipuraDigitalPage: React.FC = () => {
       id: 'poderes',
       title: 'Poderes Notariales',
       description: 'Documentos legales y poderes',
-      icon: '📄',
+      icon: 'lucide:file-text',
       duration: '6:20',
       isCompleted: false,
       isActive: false
@@ -80,7 +77,7 @@ export const WarmipuraDigitalPage: React.FC = () => {
       id: 'sucesiones',
       title: 'Sucesiones y Testamentos',
       description: 'Trámites después del fallecimiento',
-      icon: '⚖️',
+      icon: 'lucide:scale',
       duration: '8:45',
       isCompleted: false,
       isActive: false
@@ -89,7 +86,7 @@ export const WarmipuraDigitalPage: React.FC = () => {
       id: 'consultas',
       title: 'Consultas en Línea',
       description: 'Herramientas digitales de SUNARP',
-      icon: '💻',
+      icon: 'lucide:laptop',
       duration: '5:30',
       isCompleted: false,
       isActive: false
@@ -226,10 +223,6 @@ export const WarmipuraDigitalPage: React.FC = () => {
     setViewMode('syllabus');
   };
 
-  const handleBackToMain = () => {
-    window.location.href = '/';
-  };
-
   const handlePrevious = () => {
     const currentIndex = topics.findIndex(t => t.id === currentTopicId);
     if (currentIndex > 0) {
@@ -270,37 +263,9 @@ export const WarmipuraDigitalPage: React.FC = () => {
   }
 
   return (
-    <>
-      {/* Header de navegación */}
-      <div className="bg-white border-b border-gray-200 shadow-sm sticky top-16 z-40">
-        <div className="container mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <Link
-                to="/"
-                className="flex items-center space-x-2 text-gray-600 hover:text-digital-primary transition-colors duration-200"
-              >
-                <Home className="w-5 h-5" />
-                <span className="font-medium">Volver al Inicio</span>
-              </Link>
-            </div>
-            <div className="flex items-center space-x-3">
-              <img 
-                src={LogotipoPrincipal} 
-                alt="Warmipura Logo" 
-                className="h-8 w-auto"
-              />
-              <span className="text-lg font-bold text-gray-800">Warmipura Digital</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <TutorialSyllabus
-        topics={topics}
-        onTopicSelect={handleTopicSelect}
-        onBackToMain={handleBackToMain}
-      />
-    </>
+    <TutorialSyllabus
+      topics={topics}
+      onTopicSelect={handleTopicSelect}
+    />
   );
 }; 

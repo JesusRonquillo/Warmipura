@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { LazyImage } from '../atoms/LazyImage';
-import { Search, Filter, Grid, List } from 'lucide-react';
+import { Search, Grid, List } from 'lucide-react';
 import { cn } from '../../utils/cn';
 import type { GalleryImage } from '../../types/resources';
 

@@ -5,28 +5,7 @@ import { Button } from '../atoms/Button';
 import { useIntersectionObserver } from '../../hooks/useIntersectionObserver';
 import { cn } from '../../utils';
 
-const services = [
-  {
-    icon: '🏛️',
-    title: 'Proyectos',
-    description: 'Desarrollamos proyectos integrales que promueven la justicia y el empoderamiento comunitario.',
-    benefits: ['Acceso a la justicia', 'Empoderamiento comunitario', 'Desarrollo sostenible']
-  },
-  {
-    icon: '📚',
-    title: 'Guía Virtual Interactiva',
-    description: 'Warmipura Digital traduce trámites complejos del sistema peruano a un lenguaje amigable y accesible para todos.',
-    benefits: ['Alfabetización digital legal', 'Procesos simplificados', 'Acceso universal']
-  },
-  {
-    icon: '🤝',
-    title: 'Galería / Comunidad',
-    description: 'Construimos espacios de encuentro y colaboración para fortalecer los lazos comunitarios.',
-    benefits: ['Espacios de encuentro', 'Colaboración comunitaria', 'Fortalecimiento de lazos']
-  }
-];
-
-export const WhatWeDoSection: React.FC<WhatWeDoSectionProps> = ({ data }) => {
+export const WhatWeDoSection: React.FC = () => {
   const { elementRef, hasIntersected } = useIntersectionObserver({ threshold: 0.1 });
 
   return (

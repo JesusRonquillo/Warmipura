@@ -6,10 +6,6 @@ import { sampleResources } from '../data/sampleResources';
 import { sampleImages } from '../data/sampleImages';
 import type { DownloadableResource } from '../types/resources';
 import type { GalleryImage } from '../types/resources';
-import { S3Service } from '../services/S3Service';
-import { Home } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import LogotipoPrincipal from '../assets/icons/Logotipo Principal SVG.svg';
 
 const ResourcesPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'resources' | 'images'>('resources');
@@ -21,13 +17,10 @@ const ResourcesPage: React.FC = () => {
   const isPreloadingRef = useRef(false);
 
   useEffect(() => {
-    // Simular tiempo de carga inicial
     const timer = setTimeout(() => {
       setIsPageLoading(false);
-      // Iniciar precarga de imágenes inmediatamente
       startImagePreloading();
     }, 1500);
-
     return () => clearTimeout(timer);
   }, []);
 
@@ -38,47 +31,34 @@ const ResourcesPage: React.FC = () => {
     }
   }, [activeTab, preloadedImages.size]);
 
-  // Función para precargar imágenes en segundo plano
   const startImagePreloading = () => {
     if (isPreloadingRef.current) return;
-    
     isPreloadingRef.current = true;
     preloadQueueRef.current = [...sampleImages];
-    
     const preloadNextImage = () => {
       if (preloadQueueRef.current.length === 0) {
         isPreloadingRef.current = false;
         return;
       }
-
       const image = preloadQueueRef.current.shift()!;
       const img = new Image();
-      
       img.onload = () => {
         setPreloadedImages(prev => new Set([...prev, image.id]));
         setImagesLoaded(prev => prev + 1);
-        // Continuar con la siguiente imagen
-        setTimeout(preloadNextImage, 100); // Pequeño delay para no saturar
-      };
-      
-      img.onerror = () => {
-        // Si falla, continuar con la siguiente
         setTimeout(preloadNextImage, 100);
       };
-      
+      img.onerror = () => {
+        setTimeout(preloadNextImage, 100);
+      };
       img.src = image.thumbnailSrc || image.src;
     };
-
-    // Iniciar precarga con un pequeño delay
     setTimeout(preloadNextImage, 200);
   };
 
-  // Función para precargar imágenes específicas (por categoría)
   const preloadImagesByCategory = (category: string) => {
     const categoryImages = sampleImages.filter(img => 
       category === 'Todas' || img.category === category
     );
-    
     categoryImages.forEach(image => {
       if (!preloadedImages.has(image.id)) {
         const img = new Image();
@@ -91,23 +71,16 @@ const ResourcesPage: React.FC = () => {
   };
 
   const handleDownload = (resource: DownloadableResource) => {
-    console.log('Descargando:', resource.name);
-    // Aquí puedes implementar lógica adicional antes de la descarga
     window.open(resource.url, '_blank');
   };
 
   const handleImageClick = (image: GalleryImage) => {
-    // Abrir imagen en tamaño completo
     window.open(image.fullSizeSrc || image.src, '_blank');
   };
 
-  const handleImageLoad = () => {
-    // Esta función se llama cuando LazyImage termina de cargar
-    // Ya no necesitamos incrementar aquí porque se maneja en la precarga
-  };
+  const handleImageLoad = () => {};
 
   const handleCategoryClick = (category: string) => {
-    // Precargar imágenes de la categoría seleccionada
     preloadImagesByCategory(category);
   };
 
@@ -116,31 +89,6 @@ const ResourcesPage: React.FC = () => {
   return (
     <PageLoader isLoading={isPageLoading}>
       <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
-        {/* Header de navegación */}
-        <div className="bg-white border-b border-gray-200 shadow-sm sticky top-16 z-40">
-          <div className="container mx-auto px-6 py-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-4">
-                <Link
-                  to="/"
-                  className="flex items-center space-x-2 text-gray-600 hover:text-ong-primary transition-colors duration-200"
-                >
-                  <Home className="w-5 h-5" />
-                  <span className="font-medium">Volver al Inicio</span>
-                </Link>
-              </div>
-              <div className="flex items-center space-x-3">
-                <img 
-                  src={LogotipoPrincipal} 
-                  alt="Warmipura Logo" 
-                  className="h-8 w-auto"
-                />
-                <span className="text-lg font-bold text-gray-800">Recursos Digitales</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
         {/* Hero Section */}
         <div className="bg-gradient-to-r from-ong-primary to-ong-primary text-white py-16">
           <div className="container mx-auto px-4 text-center">
@@ -176,7 +124,6 @@ const ResourcesPage: React.FC = () => {
                 }`}
               >
                 📸 Galería de Imágenes
-                {/* Indicador de precarga */}
                 {isPreloadingRef.current && imagesLoaded < totalImages && (
                   <span className="ml-2 inline-flex items-center">
                     <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
@@ -223,8 +170,6 @@ const ResourcesPage: React.FC = () => {
                   Explora momentos especiales de nuestras campañas y actividades comunitarias
                 </p>
               </div>
-              
-              {/* Loading Progress Bar */}
               {totalImages > 0 && imagesLoaded < totalImages && (
                 <div className="max-w-md mx-auto mb-8">
                   <div className="flex justify-between text-sm text-gray-600 mb-2">
@@ -239,8 +184,6 @@ const ResourcesPage: React.FC = () => {
                   </div>
                 </div>
               )}
-              
-              {/* Image Categories */}
               <div className="flex flex-wrap justify-center gap-4 mb-8">
                 {['Todas', 'C_D_Madre', 'C_utiles'].map((category) => (
                   <button
@@ -254,8 +197,6 @@ const ResourcesPage: React.FC = () => {
                   </button>
                 ))}
               </div>
-
-              {/* Image Grid with LazyImage */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {sampleImages.map((image, index) => (
                   <div

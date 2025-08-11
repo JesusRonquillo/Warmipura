@@ -9,26 +9,26 @@ export class S3Service {
   }
 
   // Listar archivos en una carpeta
-  static async listFiles(prefix: string = ''): Promise<string[]> {
+  static async listFiles(_prefix: string = ''): Promise<string[]> {
     // En producción, esto se haría con AWS SDK
     // Por ahora, retornamos URLs hardcodeadas para desarrollo
     return [];
   }
 
   // Obtener metadatos de un archivo
-  static async getFileMetadata(key: string): Promise<any> {
+  static async getFileMetadata(_key: string): Promise<any> {
     // En producción, esto se haría con AWS SDK
     return {};
   }
 
   // Generar URL firmada para descarga
-  static getSignedUrl(key: string, expiresIn: number = 3600): string {
+  static getSignedUrl(key: string, _expiresIn: number = 3600): string {
     // En producción, esto se haría con AWS SDK
     return this.getFileUrl(key);
   }
 
   // Obtener URL de imagen optimizada
-  static getOptimizedImageUrl(key: string, width?: number, height?: number): string {
+  static getOptimizedImageUrl(key: string, _width?: number, _height?: number): string {
     const baseUrl = this.getFileUrl(key);
     
     // En producción, podrías usar CloudFront con Lambda@Edge para optimización
@@ -37,7 +37,7 @@ export class S3Service {
   }
 
   // Obtener URL de thumbnail
-  static getThumbnailUrl(key: string, size: 'small' | 'medium' | 'large' = 'medium'): string {
+  static getThumbnailUrl(key: string, _size: 'small' | 'medium' | 'large' = 'medium'): string {
     const baseUrl = this.getFileUrl(key);
     
     // En producción, podrías generar thumbnails automáticamente

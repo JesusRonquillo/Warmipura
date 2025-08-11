@@ -5,19 +5,17 @@ import { useScrollPosition } from '../../hooks/useScrollPosition';
 import { Link, useLocation } from 'react-router-dom';
 import type { NavigationProps } from '../../types';
 import LogotipoPrincipal from '../../assets/icons/Logotipo Principal SVG.svg';
-import { MessageCircle, X, ChevronDown } from 'lucide-react';
+import { AppIcon } from '../atoms/AppIcon';
 import { Chatbot } from './Chatbot';
 
 export const Navigation: React.FC<NavigationProps> = ({ items, ctaText }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isChatbotOpen, setIsChatbotOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
-  const { scrollPosition, scrollDirection } = useScrollPosition();
+  const { scrollPosition } = useScrollPosition();
   const location = useLocation();
   const dropdownRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
   
-  const isScrolled = scrollPosition > 50;
-  const isScrollingUp = scrollDirection === 'up';
 
   useEffect(() => {
     if (isMenuOpen) {
@@ -27,7 +25,6 @@ export const Navigation: React.FC<NavigationProps> = ({ items, ctaText }) => {
     }
   }, [isMenuOpen]);
 
-  // Cerrar dropdowns cuando se hace click fuera
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (activeDropdown && !dropdownRefs.current[activeDropdown]?.contains(event.target as Node)) {
@@ -43,15 +40,10 @@ export const Navigation: React.FC<NavigationProps> = ({ items, ctaText }) => {
 
   const handleNavClick = (href: string) => {
     if (href.startsWith('#')) {
-      // Si estamos en la página principal, hacer scroll suave
       if (location.pathname === '/') {
         const element = document.getElementById(href.slice(1));
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
-        }
+        if (element) element.scrollIntoView({ behavior: 'smooth' });
       } else {
-        // Si estamos en otra página, navegar a la principal y luego hacer scroll
-        // Usar navigate para evitar recargar la página
         window.location.href = `/${href}`;
       }
     }
@@ -69,14 +61,10 @@ export const Navigation: React.FC<NavigationProps> = ({ items, ctaText }) => {
   };
 
   const scrollToSection = (sectionId: string) => {
-    // Si estamos en la página principal, hacer scroll suave
     if (location.pathname === '/') {
       const element = document.getElementById(sectionId);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
+      if (element) element.scrollIntoView({ behavior: 'smooth' });
     } else {
-      // Si estamos en otra página, navegar a la principal y luego hacer scroll
       window.location.href = `/#${sectionId}`;
     }
     setIsMenuOpen(false);
@@ -86,19 +74,15 @@ export const Navigation: React.FC<NavigationProps> = ({ items, ctaText }) => {
   return (
     <>
       <nav className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b",
-        scrollPosition > 50 ? "bg-white shadow-lg" : "bg-white/95 backdrop-blur-sm"
+        'fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b',
+        scrollPosition > 50 ? 'bg-white shadow-lg' : 'bg-white/95 backdrop-blur-sm'
       )}>
         <div className="container mx-auto px-6">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <div className="flex items-center">
               <Link to="/">
-                <img 
-                  src={LogotipoPrincipal} 
-                  alt="Warmipura Logo" 
-                  className="h-12 w-auto hover:scale-105 transition-transform duration-300 cursor-pointer"
-                />
+                <img src={LogotipoPrincipal} alt="Warmipura Logo" className="h-12 w-auto hover:scale-105 transition-transform duration-300 cursor-pointer" />
               </Link>
             </div>
 
@@ -107,7 +91,6 @@ export const Navigation: React.FC<NavigationProps> = ({ items, ctaText }) => {
               {items.map((item, index) => (
                 <div key={item.label} className="relative">
                   {item.dropdown ? (
-                    // Item con dropdown
                     <div className="relative" ref={(el) => { dropdownRefs.current[item.id] = el; }}>
                       <button
                         onClick={() => handleDropdownToggle(item.id)}
@@ -115,40 +98,26 @@ export const Navigation: React.FC<NavigationProps> = ({ items, ctaText }) => {
                         style={{ transitionDelay: `${index * 50}ms` }}
                       >
                         {item.label}
-                        <ChevronDown className={cn(
-                          "w-4 h-4 transition-transform duration-300",
-                          activeDropdown === item.id ? "rotate-180" : ""
-                        )} />
+                        <AppIcon icon="lucide:chevron-down" className={cn('w-4 h-4 transition-transform duration-300', activeDropdown === item.id ? 'rotate-180' : '')} />
                         <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
                       </button>
-                      
-                      {/* Dropdown Menu */}
                       <div
                         className={cn(
-                          "absolute top-full left-0 mt-1 w-48 bg-white border border-gray-200 rounded-lg shadow-xl transition-all duration-300 z-50",
-                          activeDropdown === item.id ? "opacity-100 visible translate-y-0" : "opacity-0 invisible -translate-y-2 pointer-events-none"
+                          'absolute top-full left-0 mt-1 w-48 bg-white border border-gray-200 rounded-lg shadow-xl transition-all duration-300 z-50',
+                          activeDropdown === item.id ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2 pointer-events-none'
                         )}
                         style={{ zIndex: 1000 }}
                       >
-                        {/* Arrow indicator */}
                         <div className="absolute -top-2 left-6 w-4 h-4 bg-white border-l border-t border-gray-200 transform rotate-45" />
-                        
                         <div className="py-2 relative bg-white rounded-lg">
-                          {item.dropdown.map((dropdownItem, idx) => (
+                          {item.dropdown.map((dropdownItem) => (
                             <div key={dropdownItem.label}>
                               {dropdownItem.href.startsWith('/') ? (
-                                <Link
-                                  to={dropdownItem.href}
-                                  onClick={() => setActiveDropdown(null)}
-                                  className="block px-4 py-2 text-sm text-gray-700 hover:text-primary hover:bg-gray-50 transition-colors duration-200"
-                                >
+                                <Link to={dropdownItem.href} onClick={() => setActiveDropdown(null)} className="block px-4 py-2 text-sm text-gray-700 hover:text-primary hover:bg-gray-50 transition-colors duration-200">
                                   {dropdownItem.label}
                                 </Link>
                               ) : (
-                                <button
-                                  onClick={() => handleDropdownItemClick(dropdownItem.href)}
-                                  className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:text-primary hover:bg-gray-50 transition-colors duration-200"
-                                >
+                                <button onClick={() => handleDropdownItemClick(dropdownItem.href)} className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:text-primary hover:bg-gray-50 transition-colors duration-200">
                                   {dropdownItem.label}
                                 </button>
                               )}
@@ -158,39 +127,21 @@ export const Navigation: React.FC<NavigationProps> = ({ items, ctaText }) => {
                       </div>
                     </div>
                   ) : (
-                    // Item sin dropdown
                     <div>
                       {item.id === 'digital' ? (
-                        // Special animated styling for Digital item
-                        <Link
-                          to={item.href}
-                          className="animate-color-shift font-bold tracking-wider uppercase text-sm relative py-3 transition-all duration-300 hover:scale-105 group"
-                          style={{ transitionDelay: `${index * 50}ms` }}
-                        >
+                        <Link to={item.href} className="animate-color-shift font-bold tracking-wider uppercase text-sm relative py-3 transition-all duration-300 hover:scale-105 group" style={{ transitionDelay: `${index * 50}ms` }}>
                           {item.label}
                           <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-current transition-all duration-300 group-hover:w-full" />
                         </Link>
                       ) : (
                         <>
                           {item.href.startsWith('/') ? (
-                            <Link
-                              to={item.href}
-                              className={cn(
-                                'font-medium transition-all duration-300 text-sm relative py-3',
-                                'text-gray-700 hover:text-primary',
-                                location.pathname === item.href && 'text-primary'
-                              )}
-                              style={{ transitionDelay: `${index * 50}ms` }}
-                            >
+                            <Link to={item.href} className={cn('font-medium transition-all duration-300 text-sm relative py-3', 'text-gray-700 hover:text-primary', location.pathname === item.href && 'text-primary')} style={{ transitionDelay: `${index * 50}ms` }}>
                               {item.label}
                               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
                             </Link>
                           ) : (
-                            <button
-                              onClick={() => handleNavClick(item.href)}
-                              className="font-medium transition-all duration-300 text-sm relative py-3 group text-gray-700 hover:text-primary"
-                              style={{ transitionDelay: `${index * 50}ms` }}
-                            >
+                            <button onClick={() => handleNavClick(item.href)} className="font-medium transition-all duration-300 text-sm relative py-3 group text-gray-700 hover:text-primary" style={{ transitionDelay: `${index * 50}ms` }}>
                               {item.label}
                               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
                             </button>
@@ -205,41 +156,17 @@ export const Navigation: React.FC<NavigationProps> = ({ items, ctaText }) => {
 
             {/* CTA Button */}
             <div className="hidden lg:block">
-              <Button
-                variant="primary"
-                size="sm"
-                onClick={() => scrollToSection('contacto')}
-                className="text-sm px-8 py-3 shadow-sm hover:shadow-lg transition-all duration-300"
-              >
+              <Button variant="primary" size="sm" onClick={() => scrollToSection('contacto')} className="text-sm px-8 py-3 shadow-sm hover:shadow-lg transition-all duration-300">
                 {ctaText}
               </Button>
             </div>
 
             {/* Mobile Menu Button */}
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="lg:hidden p-2 text-gray-700 hover:text-primary transition-all duration-300 hover:bg-gray-100 rounded-lg"
-              aria-label="Toggle menu"
-            >
+            <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="lg:hidden p-2 text-gray-700 hover:text-primary transition-all duration-300 hover:bg-gray-100 rounded-lg" aria-label="Toggle menu">
               <div className="w-6 h-6 flex flex-col justify-center items-center">
-                <span
-                  className={cn(
-                    'w-5 h-0.5 bg-current transition-all duration-300 origin-center',
-                    isMenuOpen ? 'rotate-45 translate-y-0.5' : '-translate-y-1'
-                  )}
-                />
-                <span
-                  className={cn(
-                    'w-5 h-0.5 bg-current transition-all duration-300',
-                    isMenuOpen ? 'opacity-0 scale-0' : 'opacity-100 scale-100'
-                  )}
-                />
-                <span
-                  className={cn(
-                    'w-5 h-0.5 bg-current transition-all duration-300 origin-center',
-                    isMenuOpen ? '-rotate-45 -translate-y-0.5' : 'translate-y-1'
-                  )}
-                />
+                <span className={cn('w-5 h-0.5 bg-current transition-all duration-300 origin-center', isMenuOpen ? 'rotate-45 translate-y-0.5' : '-translate-y-1')} />
+                <span className={cn('w-5 h-0.5 bg-current transition-all duration-300', isMenuOpen ? 'opacity-0 scale-0' : 'opacity-100 scale-100')} />
+                <span className={cn('w-5 h-0.5 bg-current transition-all duration-300 origin-center', isMenuOpen ? '-rotate-45 -translate-y-0.5' : 'translate-y-1')} />
               </div>
             </button>
           </div>
@@ -263,10 +190,7 @@ export const Navigation: React.FC<NavigationProps> = ({ items, ctaText }) => {
                           className="flex items-center justify-between w-full text-gray-700 hover:text-primary font-medium transition-all duration-300 text-lg hover:translate-x-2"
                         >
                           {item.label}
-                          <ChevronDown className={cn(
-                            "w-5 h-5 transition-transform duration-300",
-                            activeDropdown === item.id ? "rotate-180" : ""
-                          )} />
+                          <AppIcon icon="lucide:chevron-down" className={cn('w-5 h-5 transition-transform duration-300', activeDropdown === item.id ? 'rotate-180' : '')} />
                         </button>
                         
                         {/* Mobile Dropdown Items */}
@@ -375,26 +299,17 @@ export const Navigation: React.FC<NavigationProps> = ({ items, ctaText }) => {
 
       {/* Chatbot Button */}
       <div className="fixed bottom-6 right-6 z-50">
-        <button
-          onClick={() => setIsChatbotOpen(!isChatbotOpen)}
-          className={cn(
-            'w-16 h-16 bg-gradient-to-r from-digital-primary to-digital-primary text-white rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 flex items-center justify-center group border-2 border-white/20',
-            isChatbotOpen ? 'scale-110 rotate-12' : 'hover:scale-110 hover:rotate-6'
-          )}
-        >
+        <button onClick={() => setIsChatbotOpen(!isChatbotOpen)} className={cn('w-16 h-16 bg-gradient-to-r from-digital-primary to-digital-primary text-white rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 flex items-center justify-center group border-2 border-white/20', isChatbotOpen ? 'scale-110 rotate-12' : 'hover:scale-110 hover:rotate-6')}>
           {isChatbotOpen ? (
-            <X className="w-7 h-7 transition-all duration-300" />
+            <AppIcon icon="lucide:x" className="w-7 h-7 transition-all duration-300" />
           ) : (
-            <MessageCircle className="w-7 h-7 transition-all duration-300 group-hover:rotate-12" />
+            <AppIcon icon="lucide:message-circle" className="w-7 h-7 transition-all duration-300 group-hover:rotate-12" />
           )}
         </button>
       </div>
 
       {/* Chatbot Component */}
-      <Chatbot 
-        isOpen={isChatbotOpen} 
-        onClose={() => setIsChatbotOpen(false)} 
-      />
+      <Chatbot isOpen={isChatbotOpen} onClose={() => setIsChatbotOpen(false)} />
     </>
   );
 }; 

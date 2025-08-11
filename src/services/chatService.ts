@@ -1,11 +1,7 @@
 // Chatbot Service for Warmipura
 
 export class ChatService {
-  private sessionId: string;
-
-  constructor() {
-    this.sessionId = `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-  }
+  constructor() {}
 
   async sendMessage(message: string): Promise<string> {
     await new Promise(resolve => setTimeout(resolve, 1000));

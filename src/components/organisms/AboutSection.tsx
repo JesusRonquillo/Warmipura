@@ -49,7 +49,6 @@ export const AboutSection: React.FC = () => {
 
   return (
     <Section
-      ref={elementRef}
       id="sobre-nosotros"
       background="gray"
       padding="xl"
@@ -62,7 +61,7 @@ export const AboutSection: React.FC = () => {
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-detail rounded-full blur-3xl animate-pulse" />
       </div>
 
-      <div className="relative z-10">
+      <div ref={elementRef as React.RefObject<HTMLDivElement>} className="relative z-10">
         {/* Header */}
         <div className={cn(
           'text-center mb-16',

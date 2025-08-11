@@ -34,7 +34,7 @@ export const ProjectsSection: React.FC = () => {
       <div className="container mx-auto px-4 py-16">
         {/* Header */}
         <div 
-          ref={elementRef}
+          ref={elementRef as React.RefObject<HTMLDivElement>}
           className={cn(
             "text-center mb-16 transition-all duration-1000",
             hasIntersected ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
@@ -51,36 +51,36 @@ export const ProjectsSection: React.FC = () => {
         {/* Projects Grid */}
         <div className="grid md:grid-cols-3 gap-8 mb-16">
           {projects.map((project, index) => (
-            <Card
-              key={index}
-              variant="outlined"
-              className={cn(
-                "p-8 text-center transition-all duration-500 hover:shadow-xl hover:border-primary/30 hover:scale-105",
-                hasIntersected ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-              )}
-              style={{ transitionDelay: `${index * 200}ms` }}
-            >
-              <div className="text-4xl mb-4 transform transition-transform duration-300 hover:scale-110">
-                {project.icon}
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-4">{project.title}</h3>
-              <p className="text-gray-600 mb-6 leading-relaxed">{project.description}</p>
-              <ul className="text-sm text-gray-500 space-y-2 mb-6">
-                {project.features.map((feature, idx) => (
-                  <li key={idx} className="flex items-center justify-center">
-                    <span className="w-2 h-2 bg-primary rounded-full mr-2"></span>
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-              <Button 
-                variant="outline" 
-                size="sm" 
-                className="border-primary text-primary hover:bg-primary hover:text-white transition-all duration-300 hover:scale-105"
+            <div key={index} style={{ transitionDelay: `${index * 200}ms` }}>
+              <Card
+                variant="outlined"
+                className={cn(
+                  "p-8 text-center transition-all duration-500 hover:shadow-xl hover:border-primary/30 hover:scale-105",
+                  hasIntersected ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+                )}
               >
-                MÁS INFORMACIÓN
-              </Button>
-            </Card>
+                <div className="text-4xl mb-4 transform transition-transform duration-300 hover:scale-110">
+                  {project.icon}
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-4">{project.title}</h3>
+                <p className="text-gray-600 mb-6 leading-relaxed">{project.description}</p>
+                <ul className="text-sm text-gray-500 space-y-2 mb-6">
+                  {project.features.map((feature, idx) => (
+                    <li key={idx} className="flex items-center justify-center">
+                      <span className="w-2 h-2 bg-primary rounded-full mr-2"></span>
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="border-primary text-primary hover:bg-primary hover:text-white transition-all duration-300 hover:scale-105"
+                >
+                  MÁS INFORMACIÓN
+                </Button>
+              </Card>
+            </div>
           ))}
         </div>
 
@@ -91,7 +91,7 @@ export const ProjectsSection: React.FC = () => {
             hasIntersected ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
           )}
         >
-          <Card variant="filled" className="bg-gray-50 border border-gray-100 shadow-sm p-8 max-w-2xl mx-auto">
+          <Card variant="elevated" className="bg-gray-50 border border-gray-100 shadow-sm p-8 max-w-2xl mx-auto">
             <h3 className="text-2xl font-bold text-gray-900 mb-4">
               ¿Te interesa participar en nuestros proyectos?
             </h3>

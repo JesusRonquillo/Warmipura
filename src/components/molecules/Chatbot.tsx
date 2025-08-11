@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { MessageCircle, X, Send, User } from 'lucide-react';
 import { chatService } from '../../services/chatService';
 import { cn } from '../../utils';
 import DudaAsombro from '../../assets/icons/Personaje/Duda Asombro.svg';
+import { AppIcon } from '../atoms/AppIcon';
 
 // Definir la interfaz directamente aquí para evitar problemas de importación
 interface ChatMessage {
@@ -125,7 +125,7 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isOpen, onClose }) => {
             onClick={onClose}
             className="w-8 h-8 flex items-center justify-center hover:bg-white/20 rounded-full transition-colors"
           >
-            <X className="w-5 h-5" />
+            <AppIcon icon="lucide:x" className="w-5 h-5" />
           </button>
         </div>
 
@@ -214,7 +214,7 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isOpen, onClose }) => {
               disabled={!inputValue.trim() || isLoading}
               className="px-4 py-3 bg-gradient-to-r from-digital-primary to-digital-primary hover:from-digital-primary/90 hover:to-digital-primary/90 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:shadow-lg rounded-2xl text-white"
             >
-              <Send className="w-4 h-4" />
+              <AppIcon icon="lucide:send" className="w-4 h-4" />
             </button>
           </div>
         </div>

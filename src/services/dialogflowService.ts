@@ -10,11 +10,7 @@ export interface ChatMessage {
 
 // Clase del servicio del chatbot
 export class DialogflowService {
-  private sessionId: string;
-
-  constructor() {
-    this.sessionId = `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-  }
+  constructor() {}
 
   async sendMessage(message: string): Promise<string> {
     // Simular delay de respuesta

@@ -5,8 +5,8 @@ import { Button } from '../atoms/Button';
 import { Input } from '../atoms/Input';
 import { useIntersectionObserver } from '../../hooks/useIntersectionObserver';
 import { cn } from '../../utils';
-import { Mail, Phone, MapPin, Clock, User, FileText, Upload, X } from 'lucide-react';
-import { EmailService, type ContactEmailData, type JoinEmailData } from '../../services/emailService';
+import { Mail, Phone, MapPin, Clock, User, FileText, X } from 'lucide-react';
+import { EmailService, type JoinEmailData } from '../../services/emailService';
 
 interface ContactData {
   email: string;
@@ -131,27 +131,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ data }) => {
     setJoinForm(prev => ({ ...prev, [field]: value }));
   };
 
-  // Estado para el archivo CV
-  const handleCvUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      // Validar tipo de archivo
-      const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
-      if (!allowedTypes.includes(file.type)) {
-        setError('Por favor, sube un archivo PDF o Word (.doc, .docx)');
-        return;
-      }
-      
-      // Validar tamaño (máximo 5MB)
-      if (file.size > 5 * 1024 * 1024) {
-        setError('El archivo es demasiado grande. Máximo 5MB');
-        return;
-      }
-      
-      setCvFile(file);
-      setError(null);
-    }
-  };
+  // Estado para el archivo CV (carga deshabilitada actualmente)
 
   const removeCvFile = () => {
     setCvFile(null);
@@ -237,7 +217,6 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ data }) => {
                               Nombre *
                             </label>
                             <Input
-                              name="name"
                               type="text"
                               placeholder="Tu nombre completo"
                               value={contactForm.name}
@@ -250,7 +229,6 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ data }) => {
                               Email *
                             </label>
                             <Input
-                              name="email"
                               type="email"
                               placeholder="tu@email.com"
                               value={contactForm.email}
@@ -264,7 +242,6 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ data }) => {
                             Asunto *
                           </label>
                           <Input
-                            name="subject"
                             type="text"
                             placeholder="Asunto del mensaje"
                             value={contactForm.subject}
@@ -335,7 +312,6 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ data }) => {
                                 Nombres *
                               </label>
                               <Input
-                                name="nombres"
                                 type="text"
                                 placeholder="Tu nombre"
                                 value={joinForm.nombres}
@@ -348,7 +324,6 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ data }) => {
                                 Apellidos *
                               </label>
                               <Input
-                                name="apellidos"
                                 type="text"
                                 placeholder="Tu apellido"
                                 value={joinForm.apellidos}
@@ -361,7 +336,6 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ data }) => {
                                 Documento de Identidad *
                               </label>
                               <Input
-                                name="dni"
                                 type="text"
                                 placeholder="DNI, CE, etc."
                                 value={joinForm.dni}
@@ -374,7 +348,6 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ data }) => {
                                 Edad *
                               </label>
                               <Input
-                                name="edad"
                                 type="number"
                                 placeholder="Tu edad"
                                 value={joinForm.edad}
@@ -387,7 +360,6 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ data }) => {
                                 Ciudad *
                               </label>
                               <Input
-                                name="ciudad"
                                 type="text"
                                 placeholder="Tu ciudad"
                                 value={joinForm.ciudad}
@@ -400,7 +372,6 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ data }) => {
                                 Teléfono
                               </label>
                               <Input
-                                name="telefono"
                                 type="tel"
                                 placeholder="Tu teléfono"
                                 value={joinForm.telefono}
@@ -422,7 +393,6 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ data }) => {
                                 Correo Electrónico *
                               </label>
                               <Input
-                                name="email"
                                 type="email"
                                 placeholder="tu@email.com"
                                 value={joinForm.email}

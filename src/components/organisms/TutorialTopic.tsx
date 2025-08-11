@@ -1,8 +1,6 @@
-import React, { useState } from 'react';
-import { Card } from '../atoms/Card';
+import React from 'react';
 import { Button } from '../atoms/Button';
-import { ChevronLeft, ChevronRight, Play, Download, FileText, BookOpen, CheckCircle } from 'lucide-react';
-import { cn } from '../../utils';
+import { AppIcon } from '../atoms/AppIcon';
 
 interface TutorialTopicProps {
   title: string;
@@ -22,7 +20,7 @@ export const TutorialTopic: React.FC<TutorialTopicProps> = ({
   title,
   description,
   videoUrl,
-  videoDuration = "5:18",
+  videoDuration = '5:18',
   infographicContent = [],
   pdfUrl,
   onPrevious,
@@ -31,11 +29,10 @@ export const TutorialTopic: React.FC<TutorialTopicProps> = ({
   hasPrevious = true,
   hasNext = true
 }) => {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [currentTime, setCurrentTime] = useState("0:03");
+  const currentTime = '0:00';
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-digital-base via-white to-digital-base pt-20">
+    <div className="min-h-screen bg-gradient-to-br from-digital-primary/5 via-white to-digital-primary/5 pt-20">
       {/* Main Content */}
       <div className="container mx-auto px-6 py-8">
         {/* Navigation Bar */}
@@ -45,7 +42,7 @@ export const TutorialTopic: React.FC<TutorialTopicProps> = ({
               onClick={onBackToSyllabus}
               variant="outline"
               size="sm"
-              className="bg-white/80 border-digital-primary text-digital-primary hover:bg-digital-base hover:border-digital-primary transition-all duration-300"
+              className="bg-white/80 border-digital-primary text-digital-primary hover:bg-digital-primary/10 hover:border-digital-primary transition-all duration-300"
             >
               ← Volver al Syllabus
             </Button>
@@ -56,9 +53,9 @@ export const TutorialTopic: React.FC<TutorialTopicProps> = ({
                 disabled={!hasPrevious}
                 variant="outline"
                 size="sm"
-                className="bg-white/80 border-digital-primary text-digital-primary hover:bg-digital-base hover:border-digital-primary transition-all duration-300 disabled:opacity-50"
+                className="bg-white/80 border-digital-primary text-digital-primary hover:bg-digital-primary/10 hover:border-digital-primary transition-all duration-300 disabled:opacity-50"
               >
-                <ChevronLeft className="w-4 h-4 mr-2" />
+                <AppIcon icon="lucide:chevron-left" className="w-4 h-4 mr-2" />
                 Anterior
               </Button>
               <Button
@@ -66,10 +63,10 @@ export const TutorialTopic: React.FC<TutorialTopicProps> = ({
                 disabled={!hasNext}
                 variant="outline"
                 size="sm"
-                className="bg-white/80 border-digital-primary text-digital-primary hover:bg-digital-base hover:border-digital-primary transition-all duration-300 disabled:opacity-50"
+                className="bg-white/80 border-digital-primary text-digital-primary hover:bg-digital-primary/10 hover:border-digital-primary transition-all duration-300 disabled:opacity-50"
               >
                 Siguiente
-                <ChevronRight className="w-4 h-4 ml-2" />
+                <AppIcon icon="lucide:chevron-right" className="w-4 h-4 ml-2" />
               </Button>
             </div>
           </div>
@@ -82,13 +79,13 @@ export const TutorialTopic: React.FC<TutorialTopicProps> = ({
             <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-digital-primary p-8">
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-12 h-12 bg-gradient-to-r from-digital-primary to-digital-primary rounded-full flex items-center justify-center">
-                  <BookOpen className="w-6 h-6 text-white" />
+                  <AppIcon icon="lucide:book-open" className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <h1 className="text-3xl lg:text-4xl font-bold text-[#FE7F30]">
+                  <h1 className="text-3xl lg:text-4xl font-bold text-digital-primary">
                     {title}
                   </h1>
-                  <p className="text-[#FE7F30] font-semibold">Tutorial Interactivo</p>
+                  <p className="text-digital-primary font-semibold">Tutorial Interactivo</p>
                 </div>
               </div>
               <p className="text-gray-700 text-lg leading-relaxed">{description}</p>
@@ -98,9 +95,9 @@ export const TutorialTopic: React.FC<TutorialTopicProps> = ({
             <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-digital-primary p-8">
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-10 h-10 bg-gradient-to-r from-digital-primary to-digital-primary rounded-full flex items-center justify-center">
-                  <Play className="w-5 h-5 text-white ml-0.5" />
+                  <AppIcon icon="lucide:play" className="w-5 h-5 text-white ml-0.5" />
                 </div>
-                <h2 className="text-2xl font-bold text-[#FE7F30]">Video Tutorial</h2>
+                <h2 className="text-2xl font-bold text-digital-primary">Video Tutorial</h2>
               </div>
               
               <div className="relative bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl overflow-hidden aspect-video shadow-2xl">
@@ -108,8 +105,8 @@ export const TutorialTopic: React.FC<TutorialTopicProps> = ({
                   <video 
                     className="w-full h-full object-cover"
                     controls
-                    onPlay={() => setIsPlaying(true)}
-                    onPause={() => setIsPlaying(false)}
+                    onPlay={() => {}}
+                    onPause={() => {}}
                   >
                     <source src={videoUrl} type="video/mp4" />
                     Tu navegador no soporta el elemento de video.
@@ -118,7 +115,7 @@ export const TutorialTopic: React.FC<TutorialTopicProps> = ({
                   <div className="w-full h-full flex items-center justify-center">
                     <div className="text-center">
                       <div className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
-                        <Play className="w-10 h-10 text-white ml-1" />
+                        <AppIcon icon="lucide:play" className="w-10 h-10 text-white ml-1" />
                       </div>
                       <p className="text-white/90 text-lg font-semibold mb-2">Video tutorial disponible</p>
                       <p className="text-white/70">Duración: {videoDuration}</p>
@@ -132,7 +129,7 @@ export const TutorialTopic: React.FC<TutorialTopicProps> = ({
                     <span className="font-semibold">{currentTime} / {videoDuration}</span>
                     <div className="flex items-center space-x-3">
                       <button className="p-2 hover:bg-white/20 rounded-lg transition-colors duration-200">
-                        <FileText size={18} />
+                        <AppIcon icon="lucide:file-text" className="w-4 h-4" />
                       </button>
                       <button className="p-2 hover:bg-white/20 rounded-lg transition-colors duration-200">
                         <div className="w-5 h-5 border-2 border-white rounded"></div>
@@ -147,9 +144,9 @@ export const TutorialTopic: React.FC<TutorialTopicProps> = ({
             <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-digital-primary p-8">
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-10 h-10 bg-gradient-to-r from-digital-primary to-digital-primary rounded-full flex items-center justify-center">
-                  <FileText className="w-5 h-5 text-white" />
+                  <AppIcon icon="lucide:file-text" className="w-5 h-5 text-white" />
                 </div>
-                <h2 className="text-2xl font-bold text-[#FE7F30]">Infografía</h2>
+                <h2 className="text-2xl font-bold text-digital-primary">Infografía</h2>
               </div>
               
               <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-6 border border-blue-200">
@@ -167,7 +164,7 @@ export const TutorialTopic: React.FC<TutorialTopicProps> = ({
                 ) : (
                   <div className="text-center py-12">
                     <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <FileText className="w-8 h-8 text-blue-600" />
+                      <AppIcon icon="lucide:file-text" className="w-8 h-8 text-blue-600" />
                     </div>
                     <p className="text-gray-600">Infografía disponible próximamente</p>
                   </div>
@@ -182,9 +179,9 @@ export const TutorialTopic: React.FC<TutorialTopicProps> = ({
             <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-digital-primary p-6">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-10 h-10 bg-gradient-to-r from-digital-primary to-digital-primary rounded-full flex items-center justify-center">
-                  <Download className="w-5 h-5 text-white" />
+                  <AppIcon icon="lucide:download" className="w-5 h-5 text-white" />
                 </div>
-                <h3 className="text-xl font-bold text-[#FE7F30]">Descargar Material</h3>
+                <h3 className="text-xl font-bold text-digital-primary">Descargar Material</h3>
               </div>
               
               <div className="space-y-3">
@@ -196,10 +193,10 @@ export const TutorialTopic: React.FC<TutorialTopicProps> = ({
                   }}
                   variant="outline"
                   size="lg"
-                  className="w-full bg-white/80 border-digital-primary text-digital-primary hover:bg-digital-base hover:border-digital-primary transition-all duration-300"
+                  className="w-full bg-white/80 border-digital-primary text-digital-primary hover:bg-digital-primary/10 hover:border-digital-primary transition-all duration-300"
                   disabled={!pdfUrl}
                 >
-                  <Download className="w-4 h-4 mr-2" />
+                  <AppIcon icon="lucide:download" className="w-4 h-4 mr-2" />
                   Descargar PDF
                 </Button>
                 
@@ -208,7 +205,7 @@ export const TutorialTopic: React.FC<TutorialTopicProps> = ({
                   size="lg"
                   className="w-full bg-white/80 border-blue-200 text-blue-700 hover:bg-blue-50 hover:border-blue-300 transition-all duration-300"
                 >
-                  <FileText className="w-4 h-4 mr-2" />
+                  <AppIcon icon="lucide:file-text" className="w-4 h-4 mr-2" />
                   Guía Completa
                 </Button>
               </div>
@@ -218,14 +215,14 @@ export const TutorialTopic: React.FC<TutorialTopicProps> = ({
             <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-digital-primary p-6">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-10 h-10 bg-gradient-to-r from-digital-primary to-digital-primary rounded-full flex items-center justify-center">
-                  <CheckCircle className="w-5 h-5 text-white" />
+                  <AppIcon icon="lucide:check" className="w-5 h-5 text-white" />
                 </div>
-                <h3 className="text-xl font-bold text-[#FE7F30]">Progreso del Tema</h3>
+                <h3 className="text-xl font-bold text-digital-primary">Progreso del Tema</h3>
               </div>
               
               <div className="space-y-4">
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-[#FE7F30] mb-2">Tema Actual</div>
+                  <div className="text-2xl font-bold text-digital-primary mb-2">Tema Actual</div>
                   <div className="text-sm text-gray-600">Completando este tutorial</div>
                 </div>
                 
@@ -241,7 +238,7 @@ export const TutorialTopic: React.FC<TutorialTopicProps> = ({
 
             {/* Quick Actions */}
             <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-digital-primary p-6">
-              <h3 className="text-xl font-bold text-[#FE7F30] mb-4">Acciones Rápidas</h3>
+              <h3 className="text-xl font-bold text-digital-primary mb-4">Acciones Rápidas</h3>
               
               <div className="space-y-3">
                 <Button
@@ -249,9 +246,9 @@ export const TutorialTopic: React.FC<TutorialTopicProps> = ({
                   disabled={!hasPrevious}
                   variant="outline"
                   size="sm"
-                  className="w-full bg-white/80 border-digital-primary text-digital-primary hover:bg-digital-base hover:border-digital-primary transition-all duration-300 disabled:opacity-50"
+                  className="w-full bg-white/80 border-digital-primary text-digital-primary hover:bg-digital-primary/10 hover:border-digital-primary transition-all duration-300 disabled:opacity-50"
                 >
-                  <ChevronLeft className="w-4 h-4 mr-2" />
+                  <AppIcon icon="lucide:chevron-left" className="w-4 h-4 mr-2" />
                   Tema Anterior
                 </Button>
                 
@@ -263,7 +260,7 @@ export const TutorialTopic: React.FC<TutorialTopicProps> = ({
                   className="w-full bg-gradient-to-r from-digital-primary to-digital-primary hover:from-digital-primary hover:to-digital-primary shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50"
                 >
                   Siguiente Tema
-                  <ChevronRight className="w-4 h-4 ml-2" />
+                  <AppIcon icon="lucide:chevron-right" className="w-4 h-4 ml-2" />
                 </Button>
               </div>
             </div>
