@@ -1,0 +1,790 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===== NORMALIZER CSS ===== */
+/* Reset y normalización para consistencia cross-browser */
+
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Remove default margin and padding */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+/* Remove list styles on ul, ol elements */
+ul,
+ol {
+  list-style: none;
+}
+
+/* Set core root defaults */
+html:focus-within {
+  scroll-behavior: smooth;
+}
+
+html {
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Set core body defaults */
+body {
+  min-height: 100vh;
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+}
+
+/* A elements that don't have a class get default styles */
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+}
+
+/* Make images easier to work with */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Inherit fonts for inputs and buttons */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+  
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Remove default button styles */
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* Remove default fieldset styles */
+fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Remove default legend styles */
+legend {
+  padding: 0;
+}
+
+/* Remove default table styles */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* Remove default textarea styles */
+textarea {
+  resize: vertical;
+}
+
+/* Remove default select styles */
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+/* Remove default input styles */
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+  -webkit-appearance: none;
+}
+
+/* ===== DESIGN TOKENS ===== */
+  :root {
+  /* Colors - Warmipura Brand Palette (NUEVA GAMA) */
+  
+  /* WARMIPURA ONG - Paleta Artística/Cálida */
+  --color-ong-primary: #FE7F30;         /* Naranja - Color Principal */
+  --color-ong-secondary: #38050E;       /* Marrón Oscuro - Para Tipografías */
+  --color-ong-detail-1: #A72666;       /* Magenta/Rojo Púrpura - Para Botones */
+  --color-ong-detail-2: #E53B33;       /* Rojo/Coral - Para Botones */
+  --color-ong-base: #FFE299;            /* Amarillo Claro/Crema - Para Tipografías o Fondos */
+  
+  /* WARMIPURA DIGITAL - Paleta Corporativa/Digital */
+  --color-digital-primary: #202670;     /* Azul Oscuro/Índigo - Color Principal */
+  --color-digital-secondary: #FE7F30;  /* Naranja - Para Tipografías */
+  --color-digital-detail-1: #E53B33;  /* Rojo/Coral - Para Botones */
+  --color-digital-detail-2: #3F1906;  /* Marrón Oscuro - Para Botones */
+  --color-digital-base: #FFE299;       /* Amarillo Claro/Crema - Para Tipografías o Fondos */
+  
+  /* Colores compartidos entre ambas identidades */
+  --color-orange: #FE7F30;              /* Naranja compartido */
+  --color-red: #E53B33;                 /* Rojo/Coral compartido */
+  --color-cream: #FFE299;               /* Crema compartido */
+  
+  /* Neutral colors */
+  --color-white: #ffffff;
+  --color-gray-50: #f9fafb;
+  --color-gray-100: #f3f4f6;
+  --color-gray-200: #e5e7eb;
+  --color-gray-300: #d1d5db;
+  --color-gray-400: #9ca3af;
+  --color-gray-500: #6b7280;
+  --color-gray-600: #4b5563;
+  --color-gray-700: #374151;
+  --color-gray-800: #1f2937;
+  --color-gray-900: #111827;
+  --color-black: #000000;
+  
+  /* Semantic colors */
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+  --color-info: #3b82f6;
+  
+  /* Typography - Warmipura Brand */
+  --font-family-display: 'Funnel Display', sans-serif;    /* Para titulares */
+  --font-family-body: 'Helvetica Neue', sans-serif;       /* Para cuerpos de texto */
+  --font-family-accent: 'Borel Regular', cursive;         /* Para frases destacadas */
+  
+  /* Font sizes - Optimized for seniors */
+  --text-xs: 0.875rem;   /* 14px - Increased for better readability */
+  --text-sm: 1rem;       /* 16px - Increased for better readability */
+  --text-base: 1.125rem; /* 18px - Increased for better readability */
+  --text-lg: 1.25rem;    /* 20px */
+  --text-xl: 1.375rem;   /* 22px */
+  --text-2xl: 1.625rem;  /* 26px */
+  --text-3xl: 2rem;      /* 32px */
+  --text-4xl: 2.5rem;    /* 40px */
+  --text-5xl: 3.25rem;   /* 52px */
+  --text-6xl: 4rem;      /* 64px */
+  
+  /* Font weights */
+  --font-light: 300;
+  --font-normal: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+  --font-extrabold: 800;
+  
+  /* Line heights */
+  --leading-none: 1;
+  --leading-tight: 1.25;
+  --leading-snug: 1.375;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.625;
+  --leading-loose: 2;
+  
+  /* Spacing */
+  --space-0: 0;
+  --space-1: 0.25rem;   /* 4px */
+  --space-2: 0.5rem;    /* 8px */
+  --space-3: 0.75rem;   /* 12px */
+  --space-4: 1rem;      /* 16px */
+  --space-5: 1.25rem;   /* 20px */
+  --space-6: 1.5rem;    /* 24px */
+  --space-8: 2rem;      /* 32px */
+  --space-10: 2.5rem;   /* 40px */
+  --space-12: 3rem;     /* 48px */
+  --space-16: 4rem;     /* 64px */
+  --space-20: 5rem;     /* 80px */
+  --space-24: 6rem;     /* 96px */
+  --space-32: 8rem;     /* 128px */
+  
+  /* Border radius */
+  --radius-none: 0;
+  --radius-sm: 0.125rem;  /* 2px */
+  --radius-base: 0.25rem; /* 4px */
+  --radius-md: 0.375rem;  /* 6px */
+  --radius-lg: 0.5rem;    /* 8px */
+  --radius-xl: 0.75rem;   /* 12px */
+  --radius-2xl: 1rem;     /* 16px */
+  --radius-3xl: 1.5rem;   /* 24px */
+  --radius-full: 9999px;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-base: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+  
+  /* Transitions */
+  --transition-fast: 150ms ease-in-out;
+  --transition-base: 250ms ease-in-out;
+  --transition-slow: 350ms ease-in-out;
+  
+  /* Z-index scale */
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-fixed: 1030;
+  --z-modal-backdrop: 1040;
+  --z-modal: 1050;
+  --z-popover: 1060;
+  --z-tooltip: 1070;
+  
+  /* Container max-widths */
+  --container-sm: 640px;
+  --container-md: 768px;
+  --container-lg: 1024px;
+  --container-xl: 1280px;
+  --container-2xl: 1536px;
+}
+
+/* ===== UTILITY CLASSES ===== */
+.container {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--space-4);
+  padding-right: var(--space-4);
+}
+
+@media (min-width: 640px) {
+  .container {
+    max-width: var(--container-sm);
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: var(--container-md);
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    max-width: var(--container-lg);
+  }
+}
+
+@media (min-width: 1280px) {
+  .container {
+    max-width: var(--container-xl);
+  }
+}
+
+@media (min-width: 1536px) {
+  .container {
+    max-width: var(--container-2xl);
+  }
+}
+
+/* ===== SCROLLBAR STYLING ===== */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-gray-100);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-gray-300);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-gray-400);
+}
+
+/* ===== FOCUS STYLES ===== */
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* ===== SELECTION STYLES ===== */
+::selection {
+  background-color: var(--color-primary-light);
+  color: var(--color-white);
+}
+
+/* ===== ACCESSIBILITY IMPROVEMENTS FOR SENIORS ===== */
+
+/* Larger touch targets */
+button, a, input, select, textarea {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Better focus indicators */
+:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+/* Improved contrast for better readability */
+.text-gray-600 {
+  color: #4a5568 !important; /* Darker gray for better contrast */
+}
+
+.text-gray-700 {
+  color: #2d3748 !important; /* Even darker for important text */
+}
+
+/* Larger spacing for better readability */
+p, li {
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+
+/* Better button sizing for seniors */
+.btn-large {
+  padding: 1rem 2rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+/* Improved form elements */
+input, textarea, select {
+  font-size: 1.125rem;
+  padding: 0.75rem 1rem;
+}
+
+/* Better mobile responsiveness */
+@media (max-width: 768px) {
+  .text-4xl {
+    font-size: 2rem !important;
+  }
+  
+  .text-5xl {
+    font-size: 2.5rem !important;
+  }
+  
+  .text-6xl {
+    font-size: 3rem !important;
+  }
+}
+
+/* ===== CUSTOM ANIMATIONS ===== */
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes ping-slow {
+  75%, 100% {
+    transform: scale(1.2);
+    opacity: 0;
+  }
+}
+
+@keyframes bounce-slow {
+  0%, 100% {
+    transform: translateY(-5%);
+    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+  }
+  50% {
+    transform: translateY(0);
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+}
+
+@keyframes pulse-slow {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes boing {
+  0%, 100% {
+    transform: scale(1) translateY(0);
+  }
+  25% {
+    transform: scale(1.1) translateY(-2px);
+  }
+  50% {
+    transform: scale(1.05) translateY(-1px);
+  }
+  75% {
+    transform: scale(1.15) translateY(-3px);
+  }
+}
+
+@keyframes colorShift {
+  0% {
+    color: #A72666;
+  }
+  33% {
+    color: #38050E;
+  }
+  66% {
+    color: #FE7F30;
+  }
+  100% {
+    color: #A72666;
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-spin-slow {
+  animation: spin-slow 8s linear infinite;
+}
+
+.animate-ping-slow {
+  animation: ping-slow 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+.animate-bounce-slow {
+  animation: bounce-slow 3s infinite;
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 4s ease-in-out infinite;
+}
+
+.animate-boing {
+  animation: boing 0.6s ease-in-out;
+}
+
+.animate-color-shift {
+  animation: colorShift 4s ease-in-out infinite;
+  transition: color 0.5s ease-in-out;
+}
+
+/* Accesibilidad para adultos mayores */
+html {
+  font-size: 16px; /* Base más grande */
+}
+
+body {
+  font-size: 1.1rem; /* Texto base más grande */
+  line-height: 1.7; /* Más espacio entre líneas */
+  color: #374151; /* Mejor contraste */
+}
+
+/* Botones más grandes para adultos mayores */
+.btn-large {
+  font-size: 1.2rem !important;
+  padding: 1rem 2rem !important;
+  min-height: 3.5rem;
+}
+
+/* Inputs más grandes */
+input, textarea, select {
+  font-size: 1.1rem !important;
+  padding: 0.875rem 1rem !important;
+  min-height: 3rem;
+}
+
+/* Enlaces más grandes */
+a {
+  font-size: 1.05rem;
+}
+
+/* Títulos más grandes y con mejor contraste */
+h1 {
+  font-size: 3.5rem !important;
+  line-height: 1.2 !important;
+  font-weight: 700 !important;
+}
+
+h2 {
+  font-size: 2.5rem !important;
+  line-height: 1.3 !important;
+  font-weight: 600 !important;
+}
+
+h3 {
+  font-size: 2rem !important;
+  line-height: 1.4 !important;
+  font-weight: 600 !important;
+}
+
+/* Mejor contraste en textos */
+.text-gray-600 {
+  color: #4B5563 !important; /* Más oscuro para mejor contraste */
+}
+
+.text-gray-700 {
+  color: #374151 !important;
+}
+
+/* Botones con mejor contraste */
+.btn-primary {
+  background-color: #D97706 !important;
+  color: white !important;
+  font-weight: 600 !important;
+  border: 2px solid #D97706 !important;
+}
+
+.btn-primary:hover {
+  background-color: #B45309 !important;
+  border-color: #B45309 !important;
+}
+
+/* Navegación más accesible */
+nav a, nav button {
+  font-size: 1.1rem !important;
+  padding: 0.75rem 1rem !important;
+  min-height: 3rem;
+}
+
+/* Cards con mejor contraste */
+.card {
+  border: 2px solid #E5E7EB !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Mejor espaciado para adultos mayores */
+.section {
+  padding: 3rem 0 !important;
+}
+
+.container {
+  padding-left: 1.5rem !important;
+  padding-right: 1.5rem !important;
+}
+
+/* Botones de navegación más grandes */
+.nav-button {
+  min-width: 3rem !important;
+  min-height: 3rem !important;
+  font-size: 1.2rem !important;
+}
+
+/* Mejor contraste en el chatbot */
+.chatbot-message {
+  font-size: 1.1rem !important;
+  line-height: 1.6 !important;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Estilos específicos para el chatbot */
+.chatbot-container {
+  height: 100vh;
+  max-height: 100vh;
+}
+
+.chatbot-messages {
+  flex: 1;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 #f1f5f9;
+}
+
+.chatbot-messages::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chatbot-messages::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 3px;
+}
+
+.chatbot-messages::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+
+.chatbot-messages::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .chatbot-container {
+    height: 100vh;
+    max-height: 100vh;
+  }
+  
+  .chatbot-message {
+    font-size: 1rem !important;
+    line-height: 1.5 !important;
+  }
+}
+
+/* Scroll más suave */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Focus visible para accesibilidad */
+button:focus, input:focus, textarea:focus, select:focus {
+  outline: 3px solid #D97706 !important;
+  outline-offset: 2px !important;
+}
+
+/* Mejor contraste en hover states */
+.hover\:bg-gray-100:hover {
+  background-color: #F3F4F6 !important;
+}
+
+.hover\:text-primary:hover {
+  color: #D97706 !important;
+}
+
+/* ===== UTILITY CLASSES ===== */
+/* Line clamp utilities for text truncation */
+.line-clamp-1 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+
+.line-clamp-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.line-clamp-3 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+/* ===== LOADING ANIMATIONS ===== */
+@keyframes shimmer {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: calc(200px + 100%) 0;
+  }
+}
+
+.shimmer {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200px 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* ===== IMAGE LOADING ANIMATIONS ===== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.image-fade-in {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+/* ===== PROGRESS BAR ANIMATIONS ===== */
+@keyframes progressFill {
+  from {
+    width: 0%;
+  }
+  to {
+    width: var(--progress-width, 0%);
+  }
+}
+
+.progress-fill {
+  animation: progressFill 0.8s ease-out forwards;
+}
+
+/* ===== SKELETON LOADING ===== */
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200px 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.skeleton-circle {
+  border-radius: 50%;
+}
+
+.skeleton-text {
+  height: 1em;
+  margin: 0.5em 0;
+  border-radius: 4px;
+}
+
+.skeleton-text:last-child {
+  width: 80%;
+}
+
+/* ===== SMOOTH TRANSITIONS ===== */
+.transition-all-smooth {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.transition-transform-smooth {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===== HOVER EFFECTS ===== */
+.hover-lift {
+  transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* ===== LOADING STATES ===== */
+.loading-opacity {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.loading-cursor {
+  cursor: wait;
+}
