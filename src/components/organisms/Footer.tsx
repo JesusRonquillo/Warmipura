@@ -1,6 +1,6 @@
 import React from 'react';
-import LogotipoPrincipal from '../../assets/icons/Personaje/Carita de puma full color.svg';
 import { AppIcon } from '../atoms/AppIcon';
+import { useFooterLogo } from '../../hooks/useLogo';
 
 const quickLinks = [
   { name: 'Inicio', href: '#inicio' },
@@ -10,25 +10,29 @@ const quickLinks = [
 ];
 
 export const Footer: React.FC = () => {
+  const logoConfig = useFooterLogo();
+  
   return (
     <footer 
-      className="relative overflow-hidden"
-      style={{ background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 50%, #92400e 100%)' }}
+      className="relative overflow-hidden bg-gradient-to-br from-ong-secondary to-ong-tertiary"
     >
-      <div className="container mx-auto px-4 py-16">
+      <div className="container mx-auto px-4 py-16 pb-20">
         <div className="grid lg:grid-cols-4 gap-8">
           {/* Brand */}
           <div className="lg:col-span-2">
-            <div className="flex items-center mb-6">
-              <div className="w-12 h-12 rounded-lg flex items-center justify-center mr-4">
-                <img className="text-2xl" src={LogotipoPrincipal} alt="ONG Warmipura" />
+            <div className="flex items-center mb-8">
+              <div className="w-24 h-24 lg:w-28 lg:h-28 rounded-lg flex items-center justify-center mr-6">
+                <img className="h-full w-auto object-contain" src={logoConfig.src} alt={logoConfig.alt} />
               </div>
-              <h3 className="text-2xl font-bold text-white">ONG Warmipura</h3>
+              <div>
+                <h3 className="text-3xl lg:text-4xl font-bold text-white mb-2">ONG Warmipura</h3>
+                <p className="text-white/80 text-lg">Construyendo un futuro libre de violencia</p>
+              </div>
             </div>
-            <p className="text-amber-100 mb-6 leading-relaxed">
+            <p className="text-white/90 mb-6 leading-relaxed">
               "ONG Warmipura es comunidad, justicia y liderazgo. Juntos construimos un futuro libre de violencia."
             </p>
-            <p className="text-amber-200 text-sm">
+            <p className="text-white/70 text-sm">
               © ONG Warmipura 2025. Desarrollado con amor para la justicia social.
             </p>
           </div>
@@ -39,8 +43,8 @@ export const Footer: React.FC = () => {
             <ul className="space-y-2">
               {quickLinks.map(link => (
                 <li key={link.name}>
-                  <a href={link.href} className="text-amber-200 hover:text-white transition-colors inline-flex items-center gap-2">
-                    <AppIcon icon="lucide:chevron-right" className="text-amber-200" />
+                  <a href={link.href} className="text-white/80 hover:text-white transition-colors inline-flex items-center gap-2">
+                    <AppIcon icon="lucide:chevron-right" className="text-white/80" />
                     {link.name}
                   </a>
                 </li>
@@ -53,19 +57,19 @@ export const Footer: React.FC = () => {
             <h4 className="text-lg font-bold text-white mb-4">Datos de contacto</h4>
             <ul className="space-y-3">
               <li>
-                <a href="mailto:ongwarmipura.pe@gmail.com" className="text-amber-200 hover:text-white transition-colors inline-flex items-center gap-2">
-                  <AppIcon icon="lucide:mail" className="text-amber-200" />
+                <a href="mailto:ongwarmipura.pe@gmail.com" className="text-white/80 hover:text-white transition-colors inline-flex items-center gap-2">
+                  <AppIcon icon="lucide:mail" className="text-white/80" />
                   ongwarmipura.pe@gmail.com
                 </a>
               </li>
               <li>
-                <a href="tel:959112264" className="text-amber-200 hover:text-white transition-colors inline-flex items-center gap-2">
-                  <AppIcon icon="lucide:phone" className="text-amber-200" />
+                <a href="tel:959112264" className="text-white/80 hover:text-white transition-colors inline-flex items-center gap-2">
+                  <AppIcon icon="lucide:phone" className="text-white/80" />
                   959 112 264
                 </a>
               </li>
-              <li className="text-amber-200 inline-flex items-center gap-2">
-                <AppIcon icon="lucide:map-pin" className="text-amber-200" />
+              <li className="text-white/80 inline-flex items-center gap-2">
+                <AppIcon icon="lucide:map-pin" className="text-white/80" />
                 Calle Melgar 513-517, Arequipa
               </li>
             </ul>
@@ -73,20 +77,38 @@ export const Footer: React.FC = () => {
         </div>
 
         {/* Bottom section */}
-        <div className="border-t border-orange-400/30 mt-12 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-amber-200 text-sm mb-4 md:mb-0">
+        <div className="border-t border-white/20 mt-12 pt-8 pb-4">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="text-white/70 text-sm text-center md:text-left">
               "Mujeres que lideran, comunidades que sanan."
             </p>
             <div className="flex space-x-3">
-              <a href="#" className="w-10 h-10 bg-amber-200/20 rounded-full flex items-center justify-center hover:bg-amber-200/30 transition-colors">
-                <AppIcon icon="lucide:instagram" className="text-amber-200" />
+              <a 
+                href="https://www.instagram.com/warmipura.pe?igsh=MTRqOGpxczkyYWpsbA==" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition-colors"
+                title="Síguenos en Instagram"
+              >
+                <AppIcon icon="lucide:instagram" className="text-white/80" />
               </a>
-              <a href="#" className="w-10 h-10 bg-amber-200/20 rounded-full flex items-center justify-center hover:bg-amber-200/30 transition-colors">
-                <AppIcon icon="lucide:facebook" className="text-amber-200" />
+              <a 
+                href="https://www.facebook.com/profile.php?id=61551211194199" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition-colors"
+                title="Síguenos en Facebook"
+              >
+                <AppIcon icon="lucide:facebook" className="text-white/80" />
               </a>
-              <a href="#" className="w-10 h-10 bg-amber-200/20 rounded-full flex items-center justify-center hover:bg-amber-200/30 transition-colors">
-                <AppIcon icon="lucide:twitter" className="text-amber-200" />
+              <a 
+                href="https://www.linkedin.com/company/100340961/admin/dashboard/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition-colors"
+                title="Conéctate en LinkedIn"
+              >
+                <AppIcon icon="lucide:linkedin" className="text-white/80" />
               </a>
             </div>
           </div>

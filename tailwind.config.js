@@ -7,21 +7,22 @@ export default {
   theme: {
     extend: {
       colors: {
-        // WARMIPURA ONG - Paleta Artística/Cálida
+        // WARMIPURA ONG - Colores extraídos del logo real
         ong: {
-          primary: '#FE7F30',      // Naranja - Color Principal
-          secondary: '#38050E',    // Marrón Oscuro - Para Tipografías
-          'detail-1': '#A72666',  // Magenta/Rojo Púrpura - Para Botones
-          'detail-2': '#E53B33',  // Rojo/Coral - Para Botones
-          base: '#FFE299',         // Amarillo Claro/Crema - Para Tipografías o Fondos
+          primary: '#EB5A2D',      // Naranja principal del logo
+          secondary: '#4C1C30',    // Marrón oscuro del logo
+          tertiary: '#38050E',     // Marrón más oscuro
+          accent: '#A72666',       // Magenta del logo
+          'accent-alt': '#A62767', // Magenta alternativo
+          warm: '#EA5A2F',         // Naranja cálido
+          'warm-alt': '#E95A30',   // Naranja cálido alternativo
         },
         // WARMIPURA DIGITAL - Paleta Corporativa/Digital
         digital: {
           primary: '#202670',      // Azul Oscuro/Índigo - Color Principal
-          secondary: '#FE7F30',   // Naranja - Para Tipografías
-          'detail-1': '#E53B33', // Rojo/Coral - Para Botones
-          'detail-2': '#3F1906', // Marrón Oscuro - Para Botones
-          base: '#FFE299',        // Amarillo Claro/Crema - Para Tipografías o Fondos
+          secondary: '#EB5A2D',   // Naranja del logo ONG
+          'detail-1': '#A72666', // Magenta del logo
+          'detail-2': '#4C1C30', // Marrón oscuro del logo
         },
         // Colores compartidos
         warmipura: {

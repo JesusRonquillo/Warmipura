@@ -9,7 +9,7 @@ import './App.css';
 const HeroSection = React.lazy(() => import('./components/organisms/HeroSection').then(m => ({ default: m.HeroSection })));
 const WhatWeDoSection = React.lazy(() => import('./components/organisms/WhatWeDoSection').then(m => ({ default: m.WhatWeDoSection })));
 const TeamSection = React.lazy(() => import('./components/organisms/TeamSection').then(m => ({ default: m.TeamSection })));
-const InteractiveGuideSection = React.lazy(() => import('./components/organisms/InteractiveGuideSection').then(m => ({ default: m.InteractiveGuideSection })));
+const GuiaDigitalSection = React.lazy(() => import('./components/organisms/GuiaDigitalSection').then(m => ({ default: m.GuiaDigitalSection })));
 const GallerySection = React.lazy(() => import('./components/organisms/GallerySection').then(m => ({ default: m.GallerySection })));
 const ContactSection = React.lazy(() => import('./components/organisms/ContactSection').then(m => ({ default: m.ContactSection })));
 const Footer = React.lazy(() => import('./components/organisms/Footer').then(m => ({ default: m.Footer })));
@@ -32,24 +32,12 @@ const teamMembers = [
   { name: 'Damaris Vargas', role: 'Dirección de comunicaciones' }
 ];
 
-// Datos de las guías
-const guides = [
-  { id: '1', title: 'GUÍA PARA UNA VIDA LIBRE DE VIOLENCIA', description: 'Una guía completa que te ayudará a identificar, prevenir y actuar ante situaciones de violencia, con información legal y recursos de apoyo.', pdfUrl: '#', videoUrl: '#' },
-  { id: '2', title: 'DERECHOS LABORALES DE LA MUJER', description: 'Conoce tus derechos en el ámbito laboral, incluyendo igualdad salarial, protección contra el acoso y licencias por maternidad.', pdfUrl: '#', videoUrl: '#' },
-  { id: '3', title: 'PROCESOS LEGALES BÁSICOS', description: 'Guía paso a paso para navegar por el sistema legal peruano, desde denuncias hasta trámites administrativos.', pdfUrl: '#', videoUrl: '#' }
-];
+
+// Importar las imágenes reales de la galería
+import { GALLERY_IMAGES } from './config/images';
 
 // Datos de la galería
-const galleryImages = [
-  { id: '1', title: 'Taller de Empoderamiento', description: 'Mujeres participando en nuestro taller de empoderamiento y derechos', category: 'Talleres', imageUrl: '/placeholder-1.jpg' },
-  { id: '2', title: 'Asesoría Legal', description: 'Sesión de asesoría legal gratuita para la comunidad', category: 'Asesoría', imageUrl: '/placeholder-2.jpg' },
-  { id: '3', title: 'Comunidad Unida', description: 'Momentos de encuentro y fortalecimiento de redes de apoyo', category: 'Comunidad', imageUrl: '/placeholder-3.jpg' },
-  { id: '4', title: 'Celebración de Logros', description: 'Celebrando los logros y avances de nuestras participantes', category: 'Celebraciones', imageUrl: '/placeholder-4.jpg' },
-  { id: '5', title: 'Trabajo en Equipo', description: 'Nuestro equipo trabajando juntos por la justicia social', category: 'Equipo', imageUrl: '/placeholder-5.jpg' },
-  { id: '6', title: 'Formación Continua', description: 'Capacitaciones y formación para el empoderamiento', category: 'Formación', imageUrl: '/placeholder-6.jpg' },
-  { id: '7', title: 'Actividades Comunitarias', description: 'Participación en actividades comunitarias y de sensibilización', category: 'Comunidad', imageUrl: '/placeholder-7.jpg' },
-  { id: '8', title: 'Logros y Reconocimientos', description: 'Reconocimientos por nuestro trabajo en la comunidad', category: 'Logros', imageUrl: '/placeholder-8.jpg' }
-];
+const galleryImages = GALLERY_IMAGES;
 
 // Contact Section Data
 const contactData = {
@@ -73,40 +61,42 @@ function App() {
     <Router>
       <div className="App safe-bottom-padding">
         <Navigation items={items} ctaText="CONTÁCTENOS" />
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <Suspense fallback={<PageLoader isLoading={true}><div /></PageLoader>}>
-                <div className="pt-6 sm:pt-8">
-                  <HeroSection data={heroData} />
-                </div>
-                <WhatWeDoSection />
-                <TeamSection members={teamMembers} />
-                <InteractiveGuideSection guides={guides} />
-                <GallerySection images={galleryImages} />
-                <ContactSection data={contactData} />
-                <Footer />
-              </Suspense>
-            }
-          />
-          <Route
-            path="/warmipura-digital"
-            element={
-              <Suspense fallback={<PageLoader isLoading={true}><div /></PageLoader>}>
-                <WarmipuraDigitalPage />
-              </Suspense>
-            }
-          />
-          <Route
-            path="/recursos"
-            element={
-              <Suspense fallback={<PageLoader isLoading={true}><div /></PageLoader>}>
-                <ResourcesPage />
-              </Suspense>
-            }
-          />
-        </Routes>
+        <main className="flex-1">
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <Suspense fallback={<PageLoader isLoading={true}><div /></PageLoader>}>
+                  <div className="pt-6 sm:pt-8">
+                    <HeroSection data={heroData} />
+                  </div>
+                  <WhatWeDoSection />
+                  <TeamSection members={teamMembers} />
+                  <GuiaDigitalSection />
+                  <GallerySection images={galleryImages} />
+                  <ContactSection data={contactData} />
+                </Suspense>
+              }
+            />
+            <Route
+              path="/warmipura-digital"
+              element={
+                <Suspense fallback={<PageLoader isLoading={true}><div /></PageLoader>}>
+                  <WarmipuraDigitalPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path="/recursos"
+              element={
+                <Suspense fallback={<PageLoader isLoading={true}><div /></PageLoader>}>
+                  <ResourcesPage />
+                </Suspense>
+              }
+            />
+          </Routes>
+        </main>
+        <Footer />
       </div>
     </Router>
   );

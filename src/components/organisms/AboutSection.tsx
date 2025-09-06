@@ -3,12 +3,14 @@ import { Section } from '../atoms/Section';
 import { Card } from '../atoms/Card';
 import { Button } from '../atoms/Button';
 import { useIntersectionObserver } from '../../hooks/useIntersectionObserver';
+import { useNavigate } from 'react-router-dom';
 import { cn } from '../../utils';
 
 export const AboutSection: React.FC = () => {
   const { elementRef, hasIntersected } = useIntersectionObserver({
     threshold: 0.2
   });
+  const navigate = useNavigate();
 
   const projects = [
     {
@@ -131,12 +133,7 @@ export const AboutSection: React.FC = () => {
                   <Button
                     variant="outline"
                     size="lg"
-                    onClick={() => {
-                      const element = document.getElementById('proyectos');
-                      if (element) {
-                        element.scrollIntoView({ behavior: 'smooth' });
-                      }
-                    }}
+                    onClick={() => navigate('/recursos')}
                     className="w-full btn-large"
                   >
                     Conoce más sobre {project.title}

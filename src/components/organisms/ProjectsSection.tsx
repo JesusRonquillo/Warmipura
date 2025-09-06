@@ -3,6 +3,7 @@ import { Section } from '../atoms/Section';
 import { Card } from '../atoms/Card';
 import { Button } from '../atoms/Button';
 import { useIntersectionObserver } from '../../hooks/useIntersectionObserver';
+import { useNavigate } from 'react-router-dom';
 import { cn } from '../../utils';
 
 const projects = [
@@ -28,6 +29,7 @@ const projects = [
 
 export const ProjectsSection: React.FC = () => {
   const { elementRef, hasIntersected } = useIntersectionObserver({ threshold: 0.1 });
+  const navigate = useNavigate();
 
   return (
     <Section id="proyectos" background="white" className="bg-white">
@@ -75,6 +77,7 @@ export const ProjectsSection: React.FC = () => {
                 <Button 
                   variant="outline" 
                   size="sm" 
+                  onClick={() => navigate('/recursos')}
                   className="border-primary text-primary hover:bg-primary hover:text-white transition-all duration-300 hover:scale-105"
                 >
                   MÁS INFORMACIÓN
@@ -101,10 +104,10 @@ export const ProjectsSection: React.FC = () => {
             <Button
               variant="primary"
               size="lg"
-              onClick={() => document.getElementById('contacto')?.scrollIntoView({ behavior: 'smooth' })}
+              onClick={() => navigate('/recursos')}
               className="text-lg px-8 py-4 hover:scale-105 transition-all duration-300"
             >
-              CONTACTAR WARMIPURA
+              VER RECURSOS
             </Button>
           </Card>
         </div>

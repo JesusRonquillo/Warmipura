@@ -1,7 +1,20 @@
 /* ===== APP STYLES ===== */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
 .App {
   min-height: 100vh;
   font-family: var(--font-family-body);
+  display: flex;
+  flex-direction: column;
+}
+
+.App > main,
+.App > div > main {
+  flex: 1;
 }
 
 /* ===== SMOOTH SCROLLING ===== */

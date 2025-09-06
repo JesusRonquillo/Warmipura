@@ -9,7 +9,7 @@ export interface ButtonProps extends BaseComponentProps {
   variant?: 'primary' | 'secondary' | 'outline' | 'ghost';
   size?: 'sm' | 'md' | 'lg';
   disabled?: boolean;
-  onClick?: () => void;
+  onClick?: (e?: React.MouseEvent<HTMLButtonElement>) => void;
   type?: 'button' | 'submit' | 'reset';
 }
 
@@ -27,6 +27,7 @@ export interface CardProps extends BaseComponentProps {
   variant?: 'default' | 'elevated' | 'outlined';
   padding?: 'sm' | 'md' | 'lg';
   onClick?: () => void;
+  style?: React.CSSProperties;
 }
 
 export interface SectionProps extends BaseComponentProps {

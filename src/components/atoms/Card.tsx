@@ -7,6 +7,7 @@ export const Card: React.FC<CardProps> = ({
   variant = 'default',
   padding = 'md',
   className,
+  style,
   ...props
 }) => {
   const variantClasses = {
@@ -29,6 +30,7 @@ export const Card: React.FC<CardProps> = ({
         paddingClasses[padding],
         className
       )}
+      style={style}
       {...props}
     >
       {children}

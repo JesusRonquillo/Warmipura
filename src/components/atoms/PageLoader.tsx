@@ -1,7 +1,7 @@
 import React from 'react';
 import { cn } from '../../utils/cn';
 import PumaFace from '../../assets/icons/Personaje/Carita de puma full color.svg';
-import Logo from '../../assets/icons/Logotipo Principal SVG.svg';
+import Logo from '../../assets/logo/ong/Logotipo secundario .svg';
 
 interface PageLoaderProps {
   isLoading: boolean;
@@ -31,7 +31,7 @@ export const PageLoader: React.FC<PageLoaderProps> = ({
       <div className="relative z-10 flex flex-col items-center select-none">
         {/* Marca */}
         <div className="flex items-center gap-3 mb-6">
-          <img src={Logo} alt="Warmipura" className="h-6 opacity-90" />
+          <img src={Logo} alt="Warmipura" className="h-8 opacity-90" />
         </div>
 
         {/* Cara del puma animada */}

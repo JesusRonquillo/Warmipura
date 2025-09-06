@@ -1,195 +1,234 @@
-import React, { useState } from 'react';
-import { Card } from '../atoms/Card';
+import React, { useState, useEffect } from 'react';
 import { useIntersectionObserver } from '../../hooks/useIntersectionObserver';
 import { cn } from '../../utils';
-import { ChevronLeft, ChevronRight, X } from 'lucide-react';
-
-interface GalleryImage {
-  id: string;
-  title: string;
-  description?: string;
-  category: string;
-  imageUrl?: string;
-}
+import { AppIcon } from '../atoms/AppIcon';
+import { GALLERY_IMAGES, getImageUrlFromConfig } from '../../config/images';
+import { useNavigate } from 'react-router-dom';
 
 interface GallerySectionProps {
-  images: GalleryImage[];
+  images?: any[]; // Mantener compatibilidad con props opcionales
 }
 
-export const GallerySection: React.FC<GallerySectionProps> = ({ images }) => {
+export const GallerySection: React.FC<GallerySectionProps> = ({ images = GALLERY_IMAGES }) => {
   const { elementRef, hasIntersected } = useIntersectionObserver({ threshold: 0.1 });
-  const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null);
-  const [selectedCategory, setSelectedCategory] = useState<string>('todas');
+  const navigate = useNavigate();
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
 
-  // Obtener categorías únicas
-  const categories = ['todas', ...Array.from(new Set(images.map(img => img.category)))];
+  // Obtener una imagen destacada de cada categoría
+  const categories = [
+    'transparencia', 
+    'navidad', 
+    'fondo-consursable', 
+    'festi-esperanza', 
+    'evento-juvenil-cerreno', 
+    'dia-del-padre', 
+    'dia-de-la-madre', 
+    'capa-cian'
+  ];
 
-  // Filtrar imágenes por categoría
-  const filteredImages = selectedCategory === 'todas' 
-    ? images 
-    : images.filter(img => img.category === selectedCategory);
-
-  const openModal = (image: GalleryImage) => {
-    setSelectedImage(image);
+  const categoryNames: Record<string, string> = {
+    'transparencia': 'Transparencia',
+    'navidad': 'Navidad',
+    'fondo-consursable': 'Fondo Consursable',
+    'festi-esperanza': 'Festi Esperanza',
+    'evento-juvenil-cerreno': 'Evento Juvenil Cerreño',
+    'dia-del-padre': 'Día del Padre',
+    'dia-de-la-madre': 'Día de la Madre',
+    'capa-cian': 'Capacitaciones CIAM'
   };
 
-  const closeModal = () => {
-    setSelectedImage(null);
+  // Obtener imagen destacada de cada categoría
+  const featuredImages = categories.map(category => {
+    const categoryImages = images.filter(img => img.category === category);
+    return categoryImages.find(img => img.featured) || categoryImages[0];
+  }).filter(Boolean);
+
+  // Auto-play del carrusel
+  useEffect(() => {
+    if (!isAutoPlaying || featuredImages.length <= 1) return;
+    
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % featuredImages.length);
+    }, 4000); // Cambia cada 4 segundos
+
+    return () => clearInterval(interval);
+  }, [isAutoPlaying, featuredImages.length]);
+
+  const handleCategoryClick = (category: string) => {
+    navigate(`/recursos?category=${category}`);
   };
 
-  const nextImage = () => {
-    if (selectedImage) {
-      const currentIndex = filteredImages.findIndex(img => img.id === selectedImage.id);
-      const nextIndex = (currentIndex + 1) % filteredImages.length;
-      setSelectedImage(filteredImages[nextIndex]);
-    }
+  const goToSlide = (index: number) => {
+    setCurrentSlide(index);
+    setIsAutoPlaying(false);
   };
 
-  const prevImage = () => {
-    if (selectedImage) {
-      const currentIndex = filteredImages.findIndex(img => img.id === selectedImage.id);
-      const prevIndex = currentIndex === 0 ? filteredImages.length - 1 : currentIndex - 1;
-      setSelectedImage(filteredImages[prevIndex]);
-    }
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % featuredImages.length);
+    setIsAutoPlaying(false);
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + featuredImages.length) % featuredImages.length);
+    setIsAutoPlaying(false);
   };
 
   return (
-    <section id="galeria" className="bg-white py-24">
-      <div className="container mx-auto px-6">
+    <section id="galeria" className="bg-gradient-to-br from-gray-50 to-white py-12 sm:py-16 lg:py-24">
+      <div className="container mx-auto px-4 sm:px-6">
         <div 
           ref={elementRef as React.RefObject<HTMLDivElement>}
           className={cn(
-            "text-center mb-16 transition-all duration-1000",
+            "text-center mb-8 sm:mb-12 lg:mb-16 transition-all duration-1000",
             hasIntersected ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
           )}
         >
-          <h2 className="text-4xl lg:text-5xl font-display font-bold text-gray-900 mb-8">
-            Galería de Fotos
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-bold text-gray-900 mb-4 sm:mb-6 lg:mb-8">
+            Nuestra Galería
           </h2>
-          <p className="text-xl lg:text-2xl text-gray-700 max-w-4xl mx-auto leading-relaxed">
-            Momentos especiales de nuestra comunidad y trabajo
+          <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-700 max-w-4xl mx-auto leading-relaxed mb-4 sm:mb-6 lg:mb-8 px-4">
+            Explora momentos especiales de nuestras actividades y campañas
           </p>
+          <div className="inline-flex items-center gap-2 bg-ong-primary/10 text-ong-primary px-4 sm:px-6 py-2 sm:py-3 rounded-full text-sm sm:text-base">
+            <AppIcon icon="lucide:camera" className="w-4 h-4 sm:w-5 sm:h-5" />
+            <span className="font-semibold">Haz clic en cualquier categoría para ver más</span>
+          </div>
         </div>
 
-        {/* Filtros de categorías */}
-        <div className="flex flex-wrap justify-center gap-4 mb-12">
-          {categories.map((category) => (
-            <button
-              key={category}
-              onClick={() => setSelectedCategory(category)}
-              className={cn(
-                "px-6 py-3 rounded-full text-lg font-medium transition-all duration-300 border-2",
-                selectedCategory === category
-                  ? "bg-primary text-white border-primary shadow-lg"
-                  : "bg-white text-gray-700 border-gray-300 hover:border-primary hover:text-primary"
-              )}
-            >
-              {category === 'todas' ? 'Todas' : category}
-            </button>
-          ))}
-        </div>
-
-        {/* Grid de fotos */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {filteredImages.map((image, index) => (
-            <div
-              key={image.id}
-              className={cn(
-                "group cursor-pointer transition-all duration-500",
-                hasIntersected ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10",
-                `delay-${index * 100}`
-              )}
-              onClick={() => openModal(image)}
-            >
-              <Card
-                variant="outlined"
-                className="overflow-hidden hover:shadow-2xl hover:scale-105 transition-all duration-300 bg-white border-2 border-gray-200"
+        {/* Carrusel de categorías */}
+        <div className="relative max-w-4xl lg:max-w-6xl mx-auto">
+          {/* Contenedor del carrusel */}
+          <div className="relative overflow-hidden rounded-xl sm:rounded-2xl bg-white shadow-2xl">
+            {featuredImages.length > 0 ? (
+              <div 
+                className="flex transition-transform duration-500 ease-in-out"
+                style={{ transform: `translateX(-${currentSlide * 100}%)` }}
               >
-                {/* Placeholder para imagen */}
-                <div className="aspect-square bg-gradient-to-br from-ong-detail-1/20 to-ong-base flex items-center justify-center relative group-hover:from-ong-detail-1/40 group-hover:to-ong-detail-1 transition-all duration-300">
-                  <div className="text-center">
-                    <div className="text-5xl mb-3">📸</div>
-                    <p className="text-sm text-gray-600 font-medium">Foto {index + 1}</p>
-                  </div>
-                  
-                  {/* Overlay con información */}
-                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center">
-                    <div className="text-center text-white p-4">
-                      <h4 className="font-bold text-lg mb-2">{image.title}</h4>
-                      {image.description && (
-                        <p className="text-sm opacity-90">{image.description}</p>
-                      )}
-                      <div className="mt-3">
-                        <span className="bg-primary/80 px-3 py-1 rounded-full text-xs font-medium">
-                          {image.category}
-                        </span>
+                {featuredImages.map((image) => (
+                <div
+                  key={image.category}
+                  className="w-full flex-shrink-0"
+                >
+                  <div
+                    className="group cursor-pointer relative h-96 md:h-[500px]"
+                    onClick={() => handleCategoryClick(image.category)}
+                  >
+                    {/* Imagen de fondo */}
+                    <img
+                      src={getImageUrlFromConfig(image)}
+                      alt={image.alt}
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        target.style.display = 'none';
+                        const fallback = target.nextElementSibling as HTMLElement;
+                        if (fallback) fallback.style.display = 'flex';
+                      }}
+                    />
+                    
+                    {/* Fallback */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-ong-primary/20 to-ong-secondary/20 flex items-center justify-center hidden">
+                      <div className="text-center">
+                        <AppIcon icon="lucide:image" className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+                        <p className="text-lg text-gray-600 font-medium">Imagen no disponible</p>
+                      </div>
+                    </div>
+                    
+                    {/* Overlay con información */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex items-end">
+                      <div className="text-white p-8 w-full">
+                        <div className="max-w-2xl">
+                          <h3 className="text-3xl md:text-4xl font-bold mb-4 group-hover:text-ong-primary transition-colors duration-300">
+                            {categoryNames[image.category]}
+                          </h3>
+                          <p className="text-lg md:text-xl opacity-90 mb-6 line-clamp-3">
+                            {image.description}
+                          </p>
+                          <div className="flex items-center gap-4">
+                            <span className="bg-ong-primary/20 text-white px-4 py-2 rounded-full text-sm font-medium backdrop-blur-sm">
+                              {image.category}
+                            </span>
+                            <div className="flex items-center gap-2 text-white/80 group-hover:text-white transition-colors duration-300">
+                              <span className="text-sm">Ver galería completa</span>
+                              <AppIcon icon="lucide:arrow-right" className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-                
-                <div className="p-4">
-                  <h4 className="font-semibold text-gray-900 mb-1 text-lg">{image.title}</h4>
-                  <p className="text-sm text-gray-600 mb-2">{image.category}</p>
-                  {image.description && (
-                    <p className="text-sm text-gray-500 line-clamp-2">{image.description}</p>
-                  )}
+                ))}
+              </div>
+            ) : (
+              <div className="h-96 md:h-[500px] flex items-center justify-center">
+                <div className="text-center">
+                  <AppIcon icon="lucide:image" className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+                  <p className="text-lg text-gray-600 font-medium">Cargando imágenes...</p>
                 </div>
-              </Card>
-            </div>
-          ))}
+              </div>
+            )}
+
+            {/* Botones de navegación */}
+            {featuredImages.length > 1 && (
+              <>
+                <button
+                  onClick={prevSlide}
+                  className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white text-gray-800 hover:text-ong-primary p-3 rounded-full shadow-lg transition-all duration-300 hover:scale-110"
+                  aria-label="Imagen anterior"
+                >
+                  <AppIcon icon="lucide:chevron-left" className="w-6 h-6" />
+                </button>
+                <button
+                  onClick={nextSlide}
+                  className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white text-gray-800 hover:text-ong-primary p-3 rounded-full shadow-lg transition-all duration-300 hover:scale-110"
+                  aria-label="Siguiente imagen"
+                >
+                  <AppIcon icon="lucide:chevron-right" className="w-6 h-6" />
+                </button>
+              </>
+            )}
+
+            {/* Indicadores */}
+            {featuredImages.length > 1 && (
+              <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex gap-2">
+                {featuredImages.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => goToSlide(index)}
+                    className={cn(
+                      "w-3 h-3 rounded-full transition-all duration-300",
+                      index === currentSlide
+                        ? "bg-white scale-125"
+                        : "bg-white/50 hover:bg-white/75"
+                    )}
+                    aria-label={`Ir a imagen ${index + 1}`}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
         </div>
 
-        {/* Modal para vista ampliada */}
-        {selectedImage && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-            <div className="relative max-w-4xl max-h-[90vh] bg-white rounded-2xl overflow-hidden shadow-2xl">
-              {/* Botón cerrar */}
-              <button
-                onClick={closeModal}
-                className="absolute top-4 right-4 z-10 w-10 h-10 bg-black/50 text-white rounded-full flex items-center justify-center hover:bg-black/70 transition-colors"
-              >
-                <X className="w-5 h-5" />
-              </button>
-
-              {/* Navegación */}
-              <button
-                onClick={prevImage}
-                className="absolute left-4 top-1/2 transform -translate-y-1/2 z-10 w-12 h-12 bg-black/50 text-white rounded-full flex items-center justify-center hover:bg-black/70 transition-colors"
-              >
-                <ChevronLeft className="w-6 h-6" />
-              </button>
-              <button
-                onClick={nextImage}
-                className="absolute right-4 top-1/2 transform -translate-y-1/2 z-10 w-12 h-12 bg-black/50 text-white rounded-full flex items-center justify-center hover:bg-black/70 transition-colors"
-              >
-                <ChevronRight className="w-6 h-6" />
-              </button>
-
-              {/* Imagen */}
-              <div className="aspect-video bg-gradient-to-br from-ong-detail-1/20 to-ong-base flex items-center justify-center">
-                <div className="text-center">
-                  <div className="text-8xl mb-4">📸</div>
-                  <h3 className="text-2xl font-bold text-gray-800 mb-2">{selectedImage.title}</h3>
-                  <p className="text-gray-600">Vista ampliada</p>
-                </div>
-              </div>
-
-              {/* Información */}
-              <div className="p-6">
-                <h3 className="text-2xl font-bold text-gray-900 mb-3">{selectedImage.title}</h3>
-                <div className="flex items-center gap-4 mb-4">
-                  <span className="bg-primary/10 text-primary px-4 py-2 rounded-full font-medium">
-                    {selectedImage.category}
-                  </span>
-                </div>
-                {selectedImage.description && (
-                  <p className="text-lg text-gray-700 leading-relaxed">{selectedImage.description}</p>
-                )}
-              </div>
-            </div>
+        {/* Call to Action */}
+        <div className="text-center mt-16">
+          <div className="bg-gradient-to-r from-ong-primary to-ong-secondary rounded-2xl p-8 text-white">
+            <h3 className="text-2xl lg:text-3xl font-bold mb-4">
+              ¿Quieres ver más fotos?
+            </h3>
+            <p className="text-lg opacity-90 mb-6 max-w-2xl mx-auto">
+              Explora nuestra galería completa con cientos de momentos especiales de nuestras actividades
+            </p>
+            <button
+              onClick={() => navigate('/recursos')}
+              className="bg-white text-ong-primary px-8 py-4 rounded-xl font-semibold hover:bg-gray-100 transition-colors duration-300 shadow-lg hover:shadow-xl"
+            >
+              <AppIcon icon="lucide:camera" className="w-5 h-5 inline mr-2" />
+              Ver Galería Completa
+            </button>
           </div>
-        )}
+        </div>
       </div>
     </section>
   );

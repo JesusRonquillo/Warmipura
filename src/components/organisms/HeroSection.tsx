@@ -21,7 +21,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ data }) => {
   return (
     <section 
       id="inicio" 
-      className="relative min-h-[90vh] md:min-h-screen flex items-center justify-center overflow-hidden bg-[#FE7F30]"
+      className="relative min-h-[90vh] md:min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-ong-primary to-ong-warm"
       style={{ paddingTop: 'calc(4rem + 1rem)' }}
     >
       {/* Parallax Background Elements */}
@@ -31,11 +31,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ data }) => {
           transform: `translateY(${scrollPosition * 0.5}px)`
         }}
       >
-        <div className="absolute top-20 left-20 w-64 h-64 bg-white/10 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-20 right-20 w-80 h-80 bg-[#FE7F30]/20 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-[#FE7F30]/15 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute top-1/4 right-1/4 w-48 h-48 bg-[#FE7F30]/25 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-1/4 left-1/3 w-56 h-56 bg-[#FE7F30]/20 rounded-full blur-3xl animate-pulse" />
+                 <div className="absolute top-20 left-20 w-64 h-64 bg-white/10 rounded-full blur-3xl animate-pulse" />
+         <div className="absolute bottom-20 right-20 w-80 h-80 bg-ong-accent/20 rounded-full blur-3xl animate-pulse" />
+         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-ong-warm/15 rounded-full blur-3xl animate-pulse" />
+         <div className="absolute top-1/4 right-1/4 w-48 h-48 bg-ong-accent/25 rounded-full blur-3xl animate-pulse" />
+         <div className="absolute bottom-1/4 left-1/3 w-56 h-56 bg-ong-warm/20 rounded-full blur-3xl animate-pulse" />
       </div>
 
       {/* Floating geometric shapes */}
@@ -45,11 +45,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ data }) => {
           transform: `translateY(${scrollPosition * 0.3}px)`
         }}
       >
-        <div className="absolute top-32 left-16 w-8 h-8 bg-white/20 rounded-lg rotate-45 animate-bounce-slow" />
-        <div className="absolute top-48 right-24 w-6 h-6 bg-[#FE7F30]/30 rounded-full animate-pulse-slow" />
-        <div className="absolute bottom-32 left-1/4 w-10 h-10 bg-[#FE7F30]/25 rounded-lg rotate-12 animate-bounce-slow" />
-        <div className="absolute bottom-48 right-1/3 w-4 h-4 bg-[#FE7F30]/40 rounded-full animate-pulse-slow" />
-        <div className="absolute top-1/3 left-1/4 w-12 h-12 bg-[#FE7F30]/30 rounded-lg rotate-45 animate-bounce-slow" />
+                 <div className="absolute top-32 left-16 w-8 h-8 bg-white/20 rounded-lg rotate-45 animate-bounce-slow" />
+         <div className="absolute top-48 right-24 w-6 h-6 bg-ong-warm/30 rounded-full animate-pulse-slow" />
+         <div className="absolute bottom-32 left-1/4 w-10 h-10 bg-ong-accent/25 rounded-lg rotate-12 animate-bounce-slow" />
+         <div className="absolute bottom-48 right-1/3 w-4 h-4 bg-ong-warm/40 rounded-full animate-pulse-slow" />
+         <div className="absolute top-1/3 left-1/4 w-12 h-12 bg-ong-accent/30 rounded-lg rotate-45 animate-bounce-slow" />
       </div>
 
       <div className="container mx-auto px-4 z-10 flex flex-col lg:flex-row items-center justify-between gap-6 md:gap-8">
@@ -64,10 +64,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ data }) => {
             transform: `translateY(${scrollPosition * 0.2}px)`
           }}
         >
-          <h1 className="text-5xl lg:text-6xl font-display font-bold leading-tight mb-6 text-white drop-shadow-lg">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-display font-bold leading-tight mb-4 sm:mb-6 text-white drop-shadow-lg">
             {data.title}
           </h1>
-          <p className="text-xl lg:text-2xl font-body mb-8 max-w-2xl mx-auto lg:mx-0 text-ong-base drop-shadow-md">
+          <p className="text-base sm:text-lg md:text-xl lg:text-2xl font-body mb-6 sm:mb-8 max-w-2xl mx-auto lg:mx-0 text-ong-base drop-shadow-md">
             {data.subtitle}
           </p>
           <div className="relative z-30 flex flex-col sm:flex-row justify-center lg:justify-start gap-3 md:gap-4">
@@ -75,7 +75,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ data }) => {
               variant="primary" 
               size="lg" 
               onClick={() => window.location.href = data.ctaLink}
-              className="text-xl px-10 py-5 btn-large shadow-lg bg-primary text-white hover:bg-primary/90 border-2 border-primary/20"
+              className="text-sm sm:text-base md:text-lg lg:text-xl px-4 sm:px-6 md:px-8 lg:px-10 py-3 sm:py-4 md:py-5 btn-large shadow-lg bg-primary text-white hover:bg-primary/90 border-2 border-primary/20"
             >
               {data.ctaText}
             </Button>
@@ -83,9 +83,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ data }) => {
               variant="outline" 
               size="lg" 
               onClick={() => document.getElementById('contacto')?.scrollIntoView({ behavior: 'smooth' })}
-              className="text-xl px-10 py-5 btn-large border-2 border-white text-white hover:bg-white/20 hover:text-white shadow-lg"
+              className="text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl px-3 sm:px-4 md:px-6 lg:px-8 xl:px-10 py-3 sm:py-4 md:py-5 btn-large border-2 border-white text-white hover:bg-white/20 hover:text-white shadow-lg"
             >
-              SOLICITA ASESORÍA LEGAL GRATUITA
+              <span className="hidden sm:inline">SOLICITA ASESORÍA LEGAL GRATUITA</span>
+              <span className="sm:hidden">ASESORÍA GRATUITA</span>
             </Button>
           </div>
         </div>
@@ -93,8 +94,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ data }) => {
         {/* Visual Elements - Personaje Feliz con elementos flotantes */}
         <div 
           className={cn(
-            'hidden md:flex justify-center lg:justify-end',
-            'flex-1 relative w-full max-w-md lg:max-w-lg h-96 lg:h-[400px] transition-all duration-1000 sm:mt-0 z-0 pointer-events-none',
+            'hidden sm:flex justify-center lg:justify-end',
+            'flex-1 relative w-full max-w-sm sm:max-w-md lg:max-w-lg h-80 sm:h-96 lg:h-[400px] transition-all duration-1000 sm:mt-0 z-0 pointer-events-none',
             hasIntersected ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
           )}
           style={{
@@ -107,7 +108,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ data }) => {
             {/* Personaje Principal - Feliz */}
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="text-center">
-                <div className="w-64 h-64 lg:w-72 lg:h-72 flex items-center justify-center mb-4">
+                <div className="w-48 h-48 sm:w-64 sm:h-64 lg:w-72 lg:h-72 flex items-center justify-center mb-2 sm:mb-4">
                   <img 
                     src={DudaAsombro} 
                     alt="Puma Chaski - Personaje de Warmipura" 
@@ -115,8 +116,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ data }) => {
                   />
                 </div>
                 <div className="text-center text-white">
-                  <p className="text-xl font-bold drop-shadow-lg">¡Hola! Soy Puma Chaski</p>
-                  <p className="text-sm text-ong-base drop-shadow-md">Tu compañero de aprendizaje</p>
+                  <p className="text-lg sm:text-xl font-bold drop-shadow-lg">¡Hola! Soy Puma Chaski</p>
+                  <p className="text-xs sm:text-sm text-ong-base drop-shadow-md">Tu compañero de aprendizaje</p>
                 </div>
               </div>
             </div>

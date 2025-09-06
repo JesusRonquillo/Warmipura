@@ -771,12 +771,12 @@ button:focus, input:focus, textarea:focus, select:focus {
 
 /* Safe padding at bottom so the chatbot button doesn't cover content on mobile */
 .safe-bottom-padding {
-  padding-bottom: 5rem;
+  padding-bottom: 0;
 }
 
 @media (min-width: 768px) {
   .safe-bottom-padding {
-    padding-bottom: 2rem;
+    padding-bottom: 0;
   }
 }
 
